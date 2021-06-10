@@ -1,6 +1,7 @@
 import React from 'react'
-import SearchBar from './headers/searchBar'
 import styled from 'styled-components'
+import SearchBar from './headers/searchBar'
+import SearchButton from './headers/searchButton'
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -16,6 +17,7 @@ const Header: React.FC = () => {
   return (
     <HeaderContainer>
       <SearchBar></SearchBar>
+      <SearchButton></SearchButton>
     </HeaderContainer>
   )
 }
