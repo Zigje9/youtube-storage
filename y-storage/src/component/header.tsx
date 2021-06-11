@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import SearchBar from './headers/searchBar'
 import SearchButton from './headers/searchButton'
-// import { getAxios } from '../../api/axios'
+import { getAxios } from '../api/axios'
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -16,8 +16,13 @@ const HeaderContainer = styled.div`
 
 const Header: React.FC = () => {
 
-  const buttonHandler = () => {
+  const buttonHandler = async () => {
     console.log("here")
+    const data = await getAxios("/", {
+      part: "snipet",
+      chart: "mostPopular"
+    })
+    console.log(data)
   }
  
   return (
