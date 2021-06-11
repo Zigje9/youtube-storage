@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import SearchBar from './headers/searchBar'
 import SearchButton from './headers/searchButton'
+// import { getAxios } from '../../api/axios'
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -14,10 +15,15 @@ const HeaderContainer = styled.div`
 
 
 const Header: React.FC = () => {
+
+  const buttonHandler = () => {
+    console.log("here")
+  }
+ 
   return (
     <HeaderContainer>
       <SearchBar></SearchBar>
-      <SearchButton></SearchButton>
+      <SearchButton onClick={buttonHandler}></SearchButton>
     </HeaderContainer>
   )
 }

@@ -8,7 +8,7 @@ export const getAxios = (reqUrl: string, reqParams: Record<string, unknown>= {})
   setHeader();
   return axios
     .create({
-      baseURL: 'http://localhost:3000/',
+      baseURL: 'https://www.googleapis.com/youtube/v3',
       method: 'get',
       timeout: 10000,
       params: reqParams,
@@ -20,7 +20,7 @@ export const postAxios = (reqUrl: string, reqData: Record<string, unknown>): Pro
   setHeader();
   return axios
     .create({
-      baseURL: 'http://localhost:3000/',
+      baseURL: 'https://www.googleapis.com/youtube/v3',
       method: 'post',
       timeout: 10000,
     })

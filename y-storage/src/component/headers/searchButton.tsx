@@ -2,6 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { SearchAlt } from '@styled-icons/boxicons-regular/SearchAlt'
 
+interface Props {
+  onClick: () => void
+}
+
 const IconButton = styled.button`
   background-color: #235b9f;
   border: none;
@@ -16,9 +20,10 @@ const Icon = styled(SearchAlt)`
   }
 `
 
-const SearchButton: React.FC = () => {
+const SearchButton: React.FC<Props> = ({...props}: Props) => {
+  const buttonHandler = props.onClick
   return (
-    <IconButton>
+    <IconButton onClick={() => buttonHandler()}>
       <Icon></Icon>
     </IconButton>
   )
