@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import SearchBar from './headers/searchBar'
 import SearchButton from './headers/searchButton'
@@ -13,22 +13,26 @@ const HeaderContainer = styled.div`
   height: 12vh;
 `
 
-
 const Header: React.FC = () => {
+  const [keyword, setKeyword] = useState("")
 
   const buttonHandler = async () => {
     console.log("here")
     const data = await getAxios("/search", {
       part: "snippet",
-      q: "song",
+      q: keyword,
       maxResults: 5,
     })
     console.log(data)
   }
+
+  const keywordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setKeyword(e.target.value)
+  }
  
   return (
     <HeaderContainer>
-      <SearchBar></SearchBar>
+      <SearchBar onChange={keywordHandler}></SearchBar>
       <SearchButton onClick={buttonHandler}></SearchButton>
     </HeaderContainer>
   )

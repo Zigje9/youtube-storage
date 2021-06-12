@@ -1,5 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+interface Props {
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
 
 const SearchInput = styled.input`
   background-color: white;
@@ -17,10 +20,11 @@ const SearchInput = styled.input`
   }
 `
 
-const SearchBar: React.FC = () => {
+const SearchBar: React.FC<Props> = ({...props}: Props) => {
+  const keywordHandler = props.onChange
   return (
     <>
-      <SearchInput placeholder="Search Keyword..."></SearchInput>
+      <SearchInput onChange={(e) => keywordHandler(e)} placeholder="Search Keyword..."></SearchInput>
     </>
   )
 }
