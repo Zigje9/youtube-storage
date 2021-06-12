@@ -13,6 +13,7 @@
     "@types/styled-components": "^5.1.10",
     "axios": "^0.21.1",
     "dotenv": "^10.0.0",
+    "http-proxy-middleware": "^2.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
@@ -54,5 +55,6 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",
     "prettier": "^2.3.1"
-  }
+  },
+  "proxy": "https://www.googleapis.com/youtube/v3"
 }

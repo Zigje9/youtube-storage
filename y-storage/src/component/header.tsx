@@ -18,9 +18,10 @@ const Header: React.FC = () => {
 
   const buttonHandler = async () => {
     console.log("here")
-    const data = await getAxios("/", {
-      part: "snipet",
-      chart: "mostPopular"
+    const data = await getAxios("/search", {
+      part: "snippet",
+      q: "song",
+      maxResults: 5,
     })
     console.log(data)
   }
