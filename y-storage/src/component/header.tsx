@@ -3,8 +3,12 @@ import styled from 'styled-components'
 import SearchBar from './headers/searchBar'
 import SearchButton from './headers/searchButton'
 import { getAxios } from '../api/axios'
+interface Video {
+  id: string;
+  title: string;
+}
 interface Props {
-  getVl: any
+  getVl: (vl: Video[]) => void
 }
 
 const HeaderContainer = styled.div`
