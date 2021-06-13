@@ -50,7 +50,7 @@ const Header: React.FC<Props> = ({...props}: Props) => {
  
   return (
     <HeaderContainer>
-      <SearchBar onChange={keywordHandler}></SearchBar>
+      <SearchBar  onClick={buttonHandler} onChange={keywordHandler}></SearchBar>
       <SearchButton onClick={buttonHandler}></SearchButton>
     </HeaderContainer>
   )

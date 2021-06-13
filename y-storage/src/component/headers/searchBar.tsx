@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 interface Props {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onClick: () => void
 }
 
 const SearchInput = styled.input`
@@ -22,9 +23,17 @@ const SearchInput = styled.input`
 
 const SearchBar: React.FC<Props> = ({...props}: Props) => {
   const keywordHandler = props.onChange
+  const buttonHandler = props.onClick
+
+  const EnterHandler = (e: React.KeyboardEvent) => {
+    if(e.key === 'Enter'){
+      buttonHandler()
+    }
+  }
+
   return (
     <>
-      <SearchInput onChange={(e) => keywordHandler(e)} placeholder="Search Keyword..."></SearchInput>
+      <SearchInput onKeyPress={(e) => EnterHandler(e)} onChange={(e) => keywordHandler(e)} placeholder="Search Keyword..."></SearchInput>
     </>
   )
 }
