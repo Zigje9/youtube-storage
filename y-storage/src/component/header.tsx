@@ -29,7 +29,7 @@ const Header: React.FC<Props> = ({...props}: Props) => {
       const res: any  = await getAxios("/search", {
         part: "snippet",
         q: keyword,
-        maxResults: 5,
+        maxResults: 10,
       })
       const vl = res.data.items.map((el: any) => {
         const infos: {id: string, title: string} = {
