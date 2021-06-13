@@ -23,11 +23,15 @@ const MainView: React.FC = () => {
       <Header getVl={videoListHandler}></Header>
       {videoList.length > 0 && videoList.map((video) => {
         const videoLink = `https://www.youtube.com/embed/${video.id}?rel=0&enablejsapi=1`
-        return <YoutubeVideo
-          key={video.id}
-          src={videoLink}
-        >
-        </YoutubeVideo>
+        return (
+        <>
+          <YoutubeVideo
+            key={video.id}
+            src={videoLink}
+          />
+          <button>check</button>
+        </>
+        )
       })}
     </>
   )
