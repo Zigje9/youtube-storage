@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import SearchBar from './headers/searchBar'
 import SearchButton from './headers/searchButton'
 import { getAxios } from '../api/axios'
+interface Props {
+  getVl: any
+}
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -13,17 +16,28 @@ const HeaderContainer = styled.div`
   height: 12vh;
 `
 
-const Header: React.FC = () => {
+const Header: React.FC<Props> = ({...props}: Props) => {
   const [keyword, setKeyword] = useState("")
+  const videoListHandler = props.getVl
 
   const buttonHandler = async () => {
-    console.log("here")
-    const data = await getAxios("/search", {
-      part: "snippet",
-      q: keyword,
-      maxResults: 5,
-    })
-    console.log(data)
+    try {
+      const res: any  = await getAxios("/search", {
+        part: "snippet",
+        q: keyword,
+        maxResults: 5,
+      })
+      const vl = res.data.items.map((el: any) => {
+        const infos: {id: string, title: string} = {
+          id: el.id.videoId,
+          title: el.snippet.title
+        }
+        return infos
+      })
+      videoListHandler(vl)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const keywordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
