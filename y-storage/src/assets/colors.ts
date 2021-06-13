@@ -15,6 +15,9 @@ const mainColor = {
     lv3: "#555555",
     lv4: "#333333",
     lv5: "#111111"
+  },
+  white: {
+    lv1: "#ffffff"
   }
 }
 

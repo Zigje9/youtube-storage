@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import SearchBar from './headers/searchBar'
 import SearchButton from './headers/searchButton'
 import { getAxios } from '../api/axios'
+import color from '../assets/colors'
 interface Video {
   id: string;
   title: string;
@@ -16,7 +17,7 @@ const HeaderContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: #235b9f;
+  background-color: ${color.blue.lv5};
   height: 12vh;
 `
 

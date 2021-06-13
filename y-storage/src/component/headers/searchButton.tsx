@@ -1,19 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
 import { SearchAlt } from '@styled-icons/boxicons-regular/SearchAlt'
-
+import color from '../../assets/colors'
 interface Props {
   onClick: () => void
 }
 
 const IconButton = styled.button`
-  background-color: #235b9f;
+  background-color: ${color.blue.lv5};
   border: none;
 `
 
 const Icon = styled(SearchAlt)`
   width: 30px;
-  color: white;
+  color: ${color.white.lv1};
   &:hover {
     transform: scale(1.2);
     cursor: pointer
