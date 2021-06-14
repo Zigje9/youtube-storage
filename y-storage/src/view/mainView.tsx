@@ -43,6 +43,17 @@ const MainView: React.FC = () => {
     setVideoList(vl)
   }
 
+  const selectListHandler = (videoId: string, isChecked: boolean) => {
+    if (isChecked) {
+      selectList.add(videoId)
+    }
+    else if (!isChecked && selectList.has(videoId)){
+      selectList.delete(videoId)
+    }
+    setSelectList(selectList)
+    console.log(selectList)
+  }
+
   return (
     <>
       <Header getVl={videoListHandler}></Header>
@@ -56,7 +67,7 @@ const MainView: React.FC = () => {
           />
           <CheckBoxContainer>
             <CheckSpan></CheckSpan>
-            <CheckBox></CheckBox>
+            <CheckBox selectFunction={selectListHandler} vid={video.id}></CheckBox>
           </CheckBoxContainer>
         </VideoBox>
         )
