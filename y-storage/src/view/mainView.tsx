@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import Header from '../component/header'
+import CheckBox from '../component/common/checkBox'
 interface Video {
   id: string;
   title: string;
@@ -21,7 +22,7 @@ const MainView: React.FC = () => {
   return (
     <>
       <Header getVl={videoListHandler}></Header>
-      {videoList.length > 0 && videoList.map((video) => {
+      {videoList.length > 0 && videoList.map((video, idx) => {
         const videoLink = `https://www.youtube.com/embed/${video.id}?rel=0&enablejsapi=1`
         return (
         <>
@@ -29,7 +30,7 @@ const MainView: React.FC = () => {
             key={video.id}
             src={videoLink}
           />
-          <button>check</button>
+          <CheckBox key={idx}></CheckBox>
         </>
         )
       })}
