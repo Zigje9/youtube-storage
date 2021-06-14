@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const InputCheckBox = styled.input.attrs({
   type: 'checkbox'
 })`
-  background-color: red;
+  transform : scale(1.5);
 `
 
 
