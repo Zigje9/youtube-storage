@@ -18,6 +18,9 @@ const mainColor = {
   },
   white: {
     lv1: "#ffffff"
+  },
+  red: {
+    lv1: "#ff0000"
   }
 }
 

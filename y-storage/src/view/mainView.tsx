@@ -37,6 +37,7 @@ const CheckBoxContainer = styled.div`
 
 const MainView: React.FC = () => {
   const [videoList, setVideoList] = useState<Video[]>([])
+  const [selectList, setSelectList] = useState(new Set())
 
   const videoListHandler = (vl: Video[]) => {
     setVideoList(vl)
