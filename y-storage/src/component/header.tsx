@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import SearchBar from './headers/searchBar'
 import SearchButton from './headers/searchButton'
 import DownloadButton from './headers/downloadButton'
+import CheckListButton from './headers/checkListButton'
 import Logo from './headers/logo'
 import { getAxios } from '../api/axios'
 interface Video {
@@ -56,6 +57,7 @@ const Header: React.FC<Props> = ({...props}: Props) => {
       <Logo></Logo>
       <SearchBar onClick={buttonHandler} onChange={keywordHandler}></SearchBar>
       <SearchButton onClick={buttonHandler}></SearchButton>
+      <CheckListButton></CheckListButton>
       <DownloadButton></DownloadButton>
     </HeaderContainer>
   )
