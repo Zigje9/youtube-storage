@@ -17,22 +17,41 @@ const VideoBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 5px solid ${color.blue.lv4};
-  border-radius: 10px;
-  background-color: ${color.blue.lv4};
+  background-color: ${color.white.lv1};
+  padding: 10px;
 `
 
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 2vw;
+  background-color: ${color.gray.lv1};
+  padding: 10px;
 `
 
 const CheckBoxContainer = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`
+
+const CartContainer = styled.div`
+  display: flex;
+  flex-direction: row;
   justify-content: space-evenly;
+  align-items: center;
   width: 100%;
   margin-top: 1vh;
+`
+
+const Title = styled.div`
+  width: 200px;
+  padding: 20px;
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 const MainView: React.FC = () => {
@@ -58,7 +77,7 @@ const MainView: React.FC = () => {
     <>
       <Header getVl={videoListHandler}></Header>
       <GridContainer>
-      {videoList.length > 0 && videoList.map((video) => {
+      {videoList && videoList.map((video) => {
         const videoLink = `https://www.youtube.com/embed/${video.id}?rel=0&enablejsapi=1`
         return (
         <VideoBox key={video.id}>
@@ -66,8 +85,14 @@ const MainView: React.FC = () => {
             src={videoLink}
           />
           <CheckBoxContainer>
-            <CheckSpan></CheckSpan>
-            <CheckBox selectFunction={selectListHandler} vid={video.id}></CheckBox>
+            <Title>
+              {video.title}
+            </Title>
+            <CartContainer>
+              <CheckSpan></CheckSpan>
+              <CheckBox selectFunction={selectListHandler} vid={video.id}></CheckBox>
+            </CartContainer>
+           
           </CheckBoxContainer>
         </VideoBox>
         )

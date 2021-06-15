@@ -21,6 +21,9 @@ const mainColor = {
   },
   red: {
     lv1: "#ff0000"
+  },
+  gray: {
+    lv1: "#efe5de"
   }
 }
 

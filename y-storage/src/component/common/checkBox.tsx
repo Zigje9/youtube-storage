@@ -10,9 +10,53 @@ interface Props{
 const InputCheckBox = styled.input.attrs({
   type: 'checkbox'
 })`
-  transform : scale(1.5);
-  :checked {
-    box-shadow: 0 0 0 2px ${color.red.lv1};
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+  :checked ~ span{
+    :after {
+      display: block;
+    }
+  }
+`
+
+const CheckBoxContainer = styled.label`
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 30px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+`
+
+const SpanCheckBox = styled.span`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: ${color.white.lv1};
+  border: 0.5px solid ${color.blue.lv5};
+  border-radius: 5px;
+  :after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 8px;
+    top: 4px;
+    width: 5px;
+    height: 10px;
+    border: solid red;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
   }
 `
 
@@ -22,7 +66,10 @@ const CheckBox: React.FC<Props> = ({...props}: Props) => {
     selectListHandler(props.vid, e.target.checked)
   }
   return (
-    <InputCheckBox onChange={(e) => checkHandler(e)}></InputCheckBox>
+    <CheckBoxContainer>
+      <InputCheckBox onChange={(e) => checkHandler(e)}></InputCheckBox>
+      <SpanCheckBox></SpanCheckBox>
+    </CheckBoxContainer>
   )
 }
 

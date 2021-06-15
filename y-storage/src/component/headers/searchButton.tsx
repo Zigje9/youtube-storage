@@ -7,7 +7,7 @@ interface Props {
 }
 
 const IconButton = styled.button`
-  background-color: ${color.blue.lv5};
+  background-color: inherit;
   border: none;
 `
 

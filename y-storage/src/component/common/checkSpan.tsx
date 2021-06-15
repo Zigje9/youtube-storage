@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import color from '../../assets/colors'
 
 const SpanBox = styled.span`
-  color: ${color.white.lv1};
+  color: ${color.black.lv1}
 `
 
 const CheckSpan: React.FC = () => {
