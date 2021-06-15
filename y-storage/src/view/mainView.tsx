@@ -49,6 +49,8 @@ const Title = styled.div`
   width: 200px;
   padding: 20px;
   font-size: 12px;
+  color: ${color.blue.lv6};
+  font-weight: 500;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
