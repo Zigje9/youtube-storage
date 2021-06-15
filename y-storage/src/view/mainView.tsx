@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import Header from '../component/header'
 import CheckBox from '../component/common/checkBox'
-import CheckSpan from '../component/common/checkSpan'
+import CheckIcon from '../component/common/checkIcon'
 import color from '../assets/colors'
 interface Video {
   id: string;
@@ -89,7 +89,7 @@ const MainView: React.FC = () => {
               {video.title}
             </Title>
             <CartContainer>
-              <CheckSpan></CheckSpan>
+              <CheckIcon></CheckIcon>
               <CheckBox selectFunction={selectListHandler} vid={video.id}></CheckBox>
             </CartContainer>
            
