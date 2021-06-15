@@ -15,13 +15,15 @@ interface Props {
 }
 
 const HeaderContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 5% 20% 25% 5% 25% 5% 5%;
   align-items: center;
   background: rgb(2,0,36);
   background: linear-gradient(96deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 18%, rgba(41,90,186,1) 41%, rgba(6,68,160,1) 76%, rgba(0,212,255,1) 95%);
   height: 12vh;
+`
+const DIV = styled.div`
+  width:100%;
 `
 
 const Header: React.FC<Props> = ({...props}: Props) => {
@@ -54,9 +56,11 @@ const Header: React.FC<Props> = ({...props}: Props) => {
  
   return (
     <HeaderContainer>
+      <DIV></DIV>
       <Logo></Logo>
       <SearchBar onClick={buttonHandler} onChange={keywordHandler}></SearchBar>
       <SearchButton onClick={buttonHandler}></SearchButton>
+      <DIV></DIV>
       <CheckListButton></CheckListButton>
       <DownloadButton></DownloadButton>
     </HeaderContainer>
