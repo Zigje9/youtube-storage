@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import SearchBar from './headers/searchBar'
 import SearchButton from './headers/searchButton'
+import Logo from './headers/logo'
 import { getAxios } from '../api/axios'
-import color from '../assets/colors'
 interface Video {
   id: string;
   title: string;
@@ -52,7 +52,8 @@ const Header: React.FC<Props> = ({...props}: Props) => {
  
   return (
     <HeaderContainer>
-      <SearchBar  onClick={buttonHandler} onChange={keywordHandler}></SearchBar>
+      <Logo></Logo>
+      <SearchBar onClick={buttonHandler} onChange={keywordHandler}></SearchBar>
       <SearchButton onClick={buttonHandler}></SearchButton>
     </HeaderContainer>
   )
