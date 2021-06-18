@@ -28,15 +28,18 @@ const DIV = styled.div`
 
 const Header: React.FC<Props> = ({...props}: Props) => {
   const [keyword, setKeyword] = useState("")
+  const [nextToken, setNextToken] = useState("")
   const videoListHandler = props.getVl
 
-  const buttonHandler = async () => {
+  const buttonHandler = async (nextToken="") => {
     try {
       const res: any  = await getAxios("/search", {
         part: "snippet",
         q: keyword,
         maxResults: 10,
       })
+      setNextToken(res.data.nextPageToken="")
+      console.log(nextToken, res.data)
       const vl = res.data.items.map((el: any) => {
         const infos: {id: string, title: string} = {
           id: el.id.videoId,
@@ -56,7 +59,7 @@ const Header: React.FC<Props> = ({...props}: Props) => {
     } = document;
     if (scrollTop + clientHeight === scrollHeight && keyword !== "") {
       console.log(keyword, "infinite")
-      buttonHandler()
+      buttonHandler(nextToken)
     }
   }
 
