@@ -75,9 +75,13 @@ const MainView: React.FC = () => {
     console.log(selectList)
   }
 
+  const resetHandler = () => {
+    setVideoList([])
+  }
+
   return (
     <>
-      <Header getVl={videoListHandler}></Header>
+      <Header getVl={videoListHandler} refresh={resetHandler}></Header>
       <GridContainer>
       {videoList && videoList.map((video) => {
         const videoLink = `https://www.youtube.com/embed/${video.id}?rel=0&enablejsapi=1`

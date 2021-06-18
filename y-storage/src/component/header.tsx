@@ -12,6 +12,7 @@ interface Video {
 }
 interface Props {
   getVl: (vl: Video[]) => void
+  refresh: () => void
 }
 
 const HeaderContainer = styled.div`
@@ -27,12 +28,20 @@ const DIV = styled.div`
 `
 
 const Header: React.FC<Props> = ({...props}: Props) => {
+  const [prevKeyword, setPrevKeyword] = useState("")
   const [keyword, setKeyword] = useState("")
   const [nextToken, setNextToken] = useState("")
   const [item, setItem] = useState<Video[]>([])
   const videoListHandler = props.getVl
+  const resetHandler = props.refresh
 
   const buttonHandler = async () => {
+    if (prevKeyword !== keyword) {
+      resetHandler()
+      setNextToken("")
+      setItem([])
+    }
+    setPrevKeyword(keyword)
     try {
       const res: any = await getAxios("/search", {
         part: "snippet",
