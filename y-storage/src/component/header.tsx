@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import SearchBar from './headers/searchBar'
 import SearchButton from './headers/searchButton'
@@ -50,9 +50,26 @@ const Header: React.FC<Props> = ({...props}: Props) => {
     }
   }
 
+  const checkScroll = () => {
+    const {
+      documentElement: { scrollTop, clientHeight, scrollHeight },
+    } = document;
+    if (scrollTop + clientHeight === scrollHeight && keyword !== "") {
+      console.log(keyword, "infinite")
+      buttonHandler()
+    }
+  }
+
   const keywordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value)
   }
+
+  useEffect(() => {
+    window.addEventListener('scroll', checkScroll);
+    return () => {
+      window.removeEventListener('scroll', checkScroll)
+    }
+  })
  
   return (
     <HeaderContainer>
