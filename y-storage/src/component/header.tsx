@@ -29,17 +29,20 @@ const DIV = styled.div`
 const Header: React.FC<Props> = ({...props}: Props) => {
   const [keyword, setKeyword] = useState("")
   const [nextToken, setNextToken] = useState("")
+  const [item, setItem] = useState<Video[]>([])
   const videoListHandler = props.getVl
 
-  const buttonHandler = async (nextToken="") => {
+  const buttonHandler = async () => {
     try {
-      const res: any  = await getAxios("/search", {
+      const res: any = await getAxios("/search", {
         part: "snippet",
         q: keyword,
         maxResults: 10,
+        pageToken: nextToken,
       })
-      setNextToken(res.data.nextPageToken="")
-      console.log(nextToken, res.data)
+      if(res.data.nextPageToken) {
+        setNextToken(res.data.nextPageToken)
+      }
       const vl = res.data.items.map((el: any) => {
         const infos: {id: string, title: string} = {
           id: el.id.videoId,
@@ -47,7 +50,8 @@ const Header: React.FC<Props> = ({...props}: Props) => {
         }
         return infos
       })
-      videoListHandler(vl)
+      setItem([...item, ...vl])
+      videoListHandler(item)
     } catch (error) {
       console.log(error)
     }
@@ -58,8 +62,7 @@ const Header: React.FC<Props> = ({...props}: Props) => {
       documentElement: { scrollTop, clientHeight, scrollHeight },
     } = document;
     if (scrollTop + clientHeight === scrollHeight && keyword !== "") {
-      console.log(keyword, "infinite")
-      buttonHandler(nextToken)
+      buttonHandler()
     }
   }
 
@@ -68,7 +71,7 @@ const Header: React.FC<Props> = ({...props}: Props) => {
   }
 
   useEffect(() => {
-    window.addEventListener('scroll', checkScroll);
+    window.addEventListener('scroll', checkScroll, {passive: true});
     return () => {
       window.removeEventListener('scroll', checkScroll)
     }
