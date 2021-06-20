@@ -77,6 +77,8 @@ const MainView: React.FC = () => {
 
   const resetHandler = () => {
     setVideoList([])
+    console.log("here")
+    console.log(videoList)
   }
 
   return (

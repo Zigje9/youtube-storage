@@ -12,6 +12,7 @@ export const getAxios = (reqUrl: string, reqParams: Record<string, unknown>= {})
       method: 'get',
       timeout: 10000,
       params: {key: process.env.REACT_APP_YOUTUBE_API_KEY, ...reqParams},
+      withCredentials: true,
     })
     .request({ url: reqUrl });
 };
@@ -22,6 +23,7 @@ export const postAxios = (reqUrl: string, reqData: Record<string, unknown>): Pro
     .create({
       method: 'post',
       timeout: 10000,
+      withCredentials: true,
     })
     .request({ url: reqUrl, data: reqData });
 };
