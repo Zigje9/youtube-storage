@@ -7,10 +7,22 @@ import color from '../assets/colors'
 interface Video {
   id: string;
   title: string;
+  thumbnail: string;
+}
+
+interface ThumbnailProps {
+  thumbnail: string;
 }
 
 const YoutubeVideo = styled.iframe`
   width: 100%;
+`
+
+const YoutubeThumbnail = styled.div<ThumbnailProps>`
+  height: 160px;
+  width: 280px;
+  background-image: url(${props => props.thumbnail});
+  background-size: cover;
 `
 
 const VideoBox = styled.div`
@@ -19,6 +31,8 @@ const VideoBox = styled.div`
   align-items: center;
   background-color: ${color.white.lv1};
   padding: 10px;
+  width: 100%;
+  height: 100%;
 `
 
 const GridContainer = styled.div`
@@ -75,23 +89,19 @@ const MainView: React.FC = () => {
     console.log(selectList)
   }
 
-  const resetHandler = () => {
-    setVideoList([])
-    console.log("here")
-    console.log(videoList)
-  }
-
   return (
     <>
-      <Header getVl={videoListHandler} refresh={resetHandler}></Header>
+      <Header getVl={videoListHandler} ></Header>
       <GridContainer>
       {videoList && videoList.map((video) => {
         const videoLink = `https://www.youtube.com/embed/${video.id}?rel=0&enablejsapi=1`
         return (
         <VideoBox key={video.id}>
-          <YoutubeVideo
+          {/* <YoutubeVideo
             src={videoLink}
-          />
+          /> */}
+          <YoutubeThumbnail thumbnail={video.thumbnail}>
+          </YoutubeThumbnail>
           <CheckBoxContainer>
             <Title>
               {video.title}

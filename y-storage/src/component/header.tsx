@@ -9,10 +9,10 @@ import { getAxios } from '../api/axios'
 interface Video {
   id: string;
   title: string;
+  thumbnail: string;
 }
 interface Props {
   getVl: (vl: Video[]) => void
-  refresh: () => void
 }
 
 const HeaderContainer = styled.div`
@@ -33,13 +33,12 @@ const Header: React.FC<Props> = ({...props}: Props) => {
   const [nextToken, setNextToken] = useState("")
   const [item, setItem] = useState<Video[]>([])
   const videoListHandler = props.getVl
-  const resetHandler = props.refresh
 
   const buttonHandler = async () => {
+    let newItem = item
     if (prevKeyword !== keyword) {
-      resetHandler()
       setNextToken("")
-      setItem([])
+      newItem = []
     }
     setPrevKeyword(keyword)
     try {
@@ -53,14 +52,15 @@ const Header: React.FC<Props> = ({...props}: Props) => {
         setNextToken(res.data.nextPageToken)
       }
       const vl = res.data.items.map((el: any) => {
-        const infos: {id: string, title: string} = {
+        const infos: {id: string, title: string, thumbnail: string} = {
           id: el.id.videoId,
-          title: el.snippet.title
+          title: el.snippet.title,
+          thumbnail: el.snippet.thumbnails.medium.url
         }
         return infos
       })
-      setItem([...item, ...vl])
-      videoListHandler(item)
+      setItem([...newItem, ...vl])
+      videoListHandler([...newItem, ...vl])
     } catch (error) {
       console.log(error)
     }
