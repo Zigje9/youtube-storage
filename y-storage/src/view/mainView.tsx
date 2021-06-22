@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import Header from '../component/header'
 import CheckBox from '../component/common/checkBox'
 import CheckIcon from '../component/common/checkIcon'
@@ -37,11 +37,34 @@ const ModalContainer = styled.div`
   background: rgba(0, 0, 0, 0.5);
 `
 
+const fade = keyframes`
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+`
+
 const YoutubeThumbnail = styled.div<ThumbnailProps>`
   height: 160px;
   width: 280px;
   background-image: url(${props => props.thumbnail});
   background-size: cover;
+  &:hover {
+    transform: scale(1.1);
+    animation: ${fade} 0.5s;
+    cursor: pointer;
+  }
 `
 
 const VideoBox = styled.div`
