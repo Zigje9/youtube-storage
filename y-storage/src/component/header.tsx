@@ -6,6 +6,7 @@ import DownloadButton from './headers/downloadButton'
 import CheckListButton from './headers/checkListButton'
 import Logo from './headers/logo'
 import { getAxios } from '../api/axios'
+import throttle from '../utils/throttle'
 interface Video {
   id: string;
   title: string;
@@ -70,19 +71,21 @@ const Header: React.FC<Props> = ({...props}: Props) => {
     const {
       documentElement: { scrollTop, clientHeight, scrollHeight },
     } = document;
-    if (scrollTop + clientHeight === scrollHeight && keyword !== "") {
+    if (scrollTop + clientHeight > scrollHeight-100 && keyword !== "") {
       buttonHandler()
     }
   }
+  
+  const throttling = throttle(checkScroll, 500)
 
   const keywordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value)
   }
 
   useEffect(() => {
-    window.addEventListener('scroll', checkScroll, {passive: true});
+    window.addEventListener('scroll', throttling._clojureThrottle, {passive: true});
     return () => {
-      window.removeEventListener('scroll', checkScroll)
+      window.removeEventListener('scroll', throttling._clojureThrottle)
     }
   })
  

@@ -1,9 +1,13 @@
-const throttle = (apiCall: any, time: number) => {
+interface Func {
+  _clojureThrottle: () => void
+}
+
+const throttle = (handler: () => void, time: number): Func => {
   let check = true;
   return {
-    clojureThrottle(){
+    _clojureThrottle(){
       if(check){
-        apiCall()
+        handler()
         check = false
         setTimeout(() => {
           check = true;
