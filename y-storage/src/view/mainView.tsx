@@ -15,14 +15,26 @@ interface ThumbnailProps {
 }
 
 const YoutubeVideo = styled.iframe`
-  position: fixed;
+  position: fixed; 
   width: 520px;
   height: 360px;
   margin: 0 auto;
   top: 100px;
   left: 0;
   right: 0;
+  z-index: 100; 
+`
+
+const ModalContainer = styled.div`
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
+  background: rgba(0, 0, 0, 0.5);
 `
 
 const YoutubeThumbnail = styled.div<ThumbnailProps>`
@@ -77,6 +89,8 @@ const Title = styled.div`
   white-space: nowrap;
 `
 
+
+
 const MainView: React.FC = () => {
   const [videoList, setVideoList] = useState<Video[]>([])
   const [selectList, setSelectList] = useState(new Set())
@@ -125,7 +139,12 @@ const MainView: React.FC = () => {
           <YoutubeThumbnail thumbnail={video.thumbnail} onClick={() => modalHandler(video.id)}>
           </YoutubeThumbnail>
           {modalId && modalId===video.id && 
-          (<YoutubeVideo src={videoLink}></YoutubeVideo>)}
+            (<ModalContainer>
+              <YoutubeVideo src={videoLink}>
+              </YoutubeVideo>
+            </ModalContainer>
+            )
+          }
           <CheckBoxContainer>
             <Title>
               {video.title}
