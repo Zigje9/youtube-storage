@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Header from '../component/header'
 import CheckBox from '../component/common/checkBox'
@@ -16,7 +16,7 @@ interface ThumbnailProps {
 
 const YoutubeVideo = styled.iframe`
   position: fixed;
-  width: 480px;
+  width: 520px;
   height: 360px;
   margin: 0 auto;
   top: 100px;
@@ -98,8 +98,21 @@ const MainView: React.FC = () => {
   }
 
   const modalHandler = (vid: string) => {
-    setModalId(vid)
+    modalId ? setModalId("") : setModalId(vid)
   }
+
+  const handleClickOutside = () => {
+    if(modalId) {
+      setModalId("")
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener("click", handleClickOutside);
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+  });
 
   return (
     <>
