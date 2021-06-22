@@ -15,13 +15,14 @@ interface ThumbnailProps {
 }
 
 const YoutubeVideo = styled.iframe`
-  width: 100%;
-`
-
-const InModal = styled.div`
-  width: 150px;
-  height: 150px;
-  background-color: red;
+  position: fixed;
+  width: 480px;
+  height: 360px;
+  margin: 0 auto;
+  top: 100px;
+  left: 0;
+  right: 0;
+  z-index: 100;
 `
 
 const YoutubeThumbnail = styled.div<ThumbnailProps>`
@@ -79,7 +80,7 @@ const Title = styled.div`
 const MainView: React.FC = () => {
   const [videoList, setVideoList] = useState<Video[]>([])
   const [selectList, setSelectList] = useState(new Set())
-  const [isModal, setIsModal] = useState(false)
+  const [modalId, setModalId] = useState("")
 
   const videoListHandler = (vl: Video[]) => {
     setVideoList(vl)
@@ -96,9 +97,8 @@ const MainView: React.FC = () => {
     console.log(selectList)
   }
 
-  const modalHandler = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation()
-    setIsModal(!isModal)
+  const modalHandler = (vid: string) => {
+    setModalId(vid)
   }
 
   return (
@@ -109,12 +109,10 @@ const MainView: React.FC = () => {
         const videoLink = `https://www.youtube.com/embed/${video.id}?rel=0&enablejsapi=1`
         return (
         <VideoBox key={video.id}>
-          {/* <YoutubeVideo
-            src={videoLink}
-          /> */}
-          <YoutubeThumbnail thumbnail={video.thumbnail} onClick={(e) => modalHandler(e)}>
-            {isModal && (<InModal></InModal>)}
+          <YoutubeThumbnail thumbnail={video.thumbnail} onClick={() => modalHandler(video.id)}>
           </YoutubeThumbnail>
+          {modalId && modalId===video.id && 
+          (<YoutubeVideo src={videoLink}></YoutubeVideo>)}
           <CheckBoxContainer>
             <Title>
               {video.title}
@@ -123,7 +121,6 @@ const MainView: React.FC = () => {
               <CheckIcon></CheckIcon>
               <CheckBox selectFunction={selectListHandler} vid={video.id}></CheckBox>
             </CartContainer>
-           
           </CheckBoxContainer>
         </VideoBox>
         )
