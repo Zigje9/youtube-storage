@@ -18,6 +18,12 @@ const YoutubeVideo = styled.iframe`
   width: 100%;
 `
 
+const InModal = styled.div`
+  width: 150px;
+  height: 150px;
+  background-color: red;
+`
+
 const YoutubeThumbnail = styled.div<ThumbnailProps>`
   height: 160px;
   width: 280px;
@@ -73,6 +79,7 @@ const Title = styled.div`
 const MainView: React.FC = () => {
   const [videoList, setVideoList] = useState<Video[]>([])
   const [selectList, setSelectList] = useState(new Set())
+  const [isModal, setIsModal] = useState(false)
 
   const videoListHandler = (vl: Video[]) => {
     setVideoList(vl)
@@ -89,6 +96,11 @@ const MainView: React.FC = () => {
     console.log(selectList)
   }
 
+  const modalHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation()
+    setIsModal(!isModal)
+  }
+
   return (
     <>
       <Header getVl={videoListHandler} ></Header>
@@ -100,7 +112,8 @@ const MainView: React.FC = () => {
           {/* <YoutubeVideo
             src={videoLink}
           /> */}
-          <YoutubeThumbnail thumbnail={video.thumbnail}>
+          <YoutubeThumbnail thumbnail={video.thumbnail} onClick={(e) => modalHandler(e)}>
+            {isModal && (<InModal></InModal>)}
           </YoutubeThumbnail>
           <CheckBoxContainer>
             <Title>
