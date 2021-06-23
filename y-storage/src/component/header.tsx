@@ -15,7 +15,7 @@ interface Video {
 
 interface Props {
   getVl: (vl: Video[]) => void
-  cartList: Set<unknown> | null
+  cartList: Set<unknown> | any
 }
 
 const HeaderContainer = styled.div`
@@ -26,8 +26,6 @@ const HeaderContainer = styled.div`
   background: linear-gradient(96deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 18%, rgba(41,90,186,1) 41%, rgba(6,68,160,1) 76%, rgba(0,212,255,1) 95%);
   height: 12vh;
 `
-
-
 const DIV = styled.div`
   width:100%;
 `
@@ -75,12 +73,12 @@ const Header: React.FC<Props> = ({...props}: Props) => {
     const {
       documentElement: { scrollTop, clientHeight, scrollHeight },
     } = document;
-    if (scrollTop + clientHeight > scrollHeight-100 && keyword !== "") {
+    if (scrollTop + clientHeight > scrollHeight-200 && keyword !== "") {
       buttonHandler()
     }
   }
   
-  const throttling = throttle(checkScroll, 500)
+  const throttling = throttle(checkScroll, 100)
 
   const keywordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value)
@@ -101,7 +99,7 @@ const Header: React.FC<Props> = ({...props}: Props) => {
       <SearchButton onClick={buttonHandler}></SearchButton>
       <DIV></DIV>
       <CheckListButton cartList={props.cartList}></CheckListButton>
-      <DownloadButton></DownloadButton>
+      <DownloadButton cartList={props.cartList}></DownloadButton>
     </HeaderContainer>
   )
 }
