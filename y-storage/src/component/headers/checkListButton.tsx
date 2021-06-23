@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import { MusicNoteList } from '@styled-icons/bootstrap/MusicNoteList'
 import color from '../../assets/colors'
 
+interface Props {
+  cartList: Set<unknown> | any
+}
 interface HoverProps {
   isHover: boolean;
 }
@@ -24,27 +27,32 @@ const ListIcon = styled(MusicNoteList)`
 const DropDownBox = styled.div<HoverProps>`
   display: ${(props) => props.isHover ? "block" : "none"};
   position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  background-color: ${color.white.lv1};
+  min-width: 180px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.7);
   z-index: 1;
+  border-radius: 20px;
 `
 
 const DropDownContent = styled.div`
-  color: black;
+  color: ${color.blue.lv4};
   padding: 12px 16px;
   text-decoration: none;
   display: block;
 `
 
-const CheckListButton: React.FC = () => {
+const CheckListButton: React.FC<Props> = ({...props}: Props) => {
   const [isHover, setIsHover] = useState(false)
+  const cartList = [...props.cartList]
 
   return (
     <ListButton>
       <ListIcon onMouseOver={() => setIsHover(true)} onMouseOut={() => setIsHover(false)}></ListIcon>
       <DropDownBox isHover={isHover}>
-        <DropDownContent>abc</DropDownContent>
+        {cartList && cartList.map((videoId) => {
+          return <DropDownContent key={videoId}>{videoId}</DropDownContent>
+          })
+        }
       </DropDownBox>
     </ListButton>
   )

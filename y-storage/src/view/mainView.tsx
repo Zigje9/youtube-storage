@@ -131,7 +131,6 @@ const MainView: React.FC = () => {
       selectList.delete(videoId)
     }
     setSelectList(selectList)
-    console.log(selectList)
   }
 
   const modalHandler = (vid: string) => {
@@ -153,7 +152,7 @@ const MainView: React.FC = () => {
 
   return (
     <>
-      <Header getVl={videoListHandler}></Header>
+      <Header getVl={videoListHandler} cartList={selectList}></Header>
       <GridContainer>
       {videoList && videoList.map((video) => {
         const videoLink = `https://www.youtube.com/embed/${video.id}?rel=0&enablejsapi=1`

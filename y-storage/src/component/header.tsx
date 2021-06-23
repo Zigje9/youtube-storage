@@ -12,8 +12,10 @@ interface Video {
   title: string;
   thumbnail: string;
 }
+
 interface Props {
   getVl: (vl: Video[]) => void
+  cartList: Set<unknown> | null
 }
 
 const HeaderContainer = styled.div`
@@ -98,7 +100,7 @@ const Header: React.FC<Props> = ({...props}: Props) => {
       <SearchBar onClick={buttonHandler} onChange={keywordHandler}></SearchBar>
       <SearchButton onClick={buttonHandler}></SearchButton>
       <DIV></DIV>
-      <CheckListButton></CheckListButton>
+      <CheckListButton cartList={props.cartList}></CheckListButton>
       <DownloadButton></DownloadButton>
     </HeaderContainer>
   )
