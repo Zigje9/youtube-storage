@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { Download } from '@styled-icons/boxicons-regular/Download'
 import color from '../../assets/colors'
-
 interface Props {
   cartList: Set<unknown> | any
 }
@@ -23,8 +22,13 @@ const DownIcon = styled(Download)`
 
 const DownloadButton: React.FC<Props> = ({...props}: Props) => {
   const cartList = [...props.cartList]
+  // what is diff checkListButton  ?...
+  const downloadHandler = () => {
+    console.log("here", cartList)
+  }
+
   return (
-    <DownButton>
+    <DownButton onClick={() => downloadHandler()}>
       <DownIcon></DownIcon>
     </DownButton>
   )
