@@ -108,12 +108,13 @@ const MainView: React.FC = () => {
 
   const selectListHandler = (videoId: string, isChecked: boolean) => {
     if (isChecked) {
-      selectList.add(videoId)
+      setSelectList((prev) => new Set(prev).add(videoId))
     }
     else if (!isChecked && selectList.has(videoId)){
-      selectList.delete(videoId)
+      const newSelectList = new Set(selectList)
+      newSelectList.delete(videoId)
+      setSelectList(newSelectList)
     }
-    setSelectList(selectList)
   }
 
   const modalHandler = (vid: string) => {
@@ -137,10 +138,10 @@ const MainView: React.FC = () => {
     <>
       <Header getVl={videoListHandler} cartList={selectList}></Header>
       <GridContainer>
-      {videoList && videoList.map((video) => {
+      {videoList && videoList.map((video, idx) => {
         const videoLink = `https://www.youtube.com/embed/${video.id}?rel=0&enablejsapi=1`
         return (
-        <VideoBox key={video.id}>
+        <VideoBox key={`${video.id}_${idx}`}>
           <YoutubeThumbnail thumbnail={video.thumbnail} onClick={() => modalHandler(video.id)}>
           </YoutubeThumbnail>
           {modalId && modalId===video.id && 
