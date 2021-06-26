@@ -4,6 +4,7 @@ import SearchBar from './headers/searchBar';
 import SearchButton from './headers/searchButton';
 import DownloadButton from './headers/downloadButton';
 import CheckListButton from './headers/checkListButton';
+import DiskButton from './headers/diskButton';
 import Logo from './headers/logo';
 import { getAxios } from '../api/axios';
 import throttle from '../utils/throttle';
@@ -22,7 +23,7 @@ interface Props {
 
 const HeaderContainer = styled.div`
   display: grid;
-  grid-template-columns: 5% 20% 25% 5% 25% 5% 5%;
+  grid-template-columns: 5% 10% 15% 25% 5% 25% 5% 5%;
   align-items: center;
   background: rgb(2, 0, 36);
   background: linear-gradient(
@@ -136,6 +137,7 @@ const Header: React.FC<Props> = ({ ...props }: Props) => {
     <HeaderContainer>
       <DIV></DIV>
       <Logo></Logo>
+      <DiskButton></DiskButton>
       <SearchBar onClick={buttonHandler} onChange={keywordHandler}></SearchBar>
       <SearchButton onClick={buttonHandler}></SearchButton>
       <DIV></DIV>
