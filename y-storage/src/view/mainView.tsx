@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
-import Header from '../component/header'
-import CheckBox from '../component/common/checkBox'
-import CheckIcon from '../component/common/checkIcon'
-import color from '../assets/colors'
-import animation from '../assets/animation'
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import Header from '../component/header';
+import CheckBox from '../component/common/checkBox';
+import CheckIcon from '../component/common/checkIcon';
+import color from '../assets/colors';
+import * as animation from '../assets/animation';
 interface Video {
   id: string;
   title: string;
@@ -16,15 +16,15 @@ interface ThumbnailProps {
 }
 
 const YoutubeVideo = styled.iframe`
-  position: fixed; 
+  position: fixed;
   width: 520px;
   height: 360px;
   margin: 0 auto;
   top: 100px;
   left: 0;
   right: 0;
-  z-index: 100; 
-`
+  z-index: 100;
+`;
 
 const ModalContainer = styled.div`
   position: fixed;
@@ -36,19 +36,19 @@ const ModalContainer = styled.div`
   right: 0;
   z-index: 100;
   background: rgba(0, 0, 0, 0.5);
-`
+`;
 
 const YoutubeThumbnail = styled.div<ThumbnailProps>`
   height: 160px;
   width: 280px;
-  background-image: url(${props => props.thumbnail});
+  background-image: url(${(props) => props.thumbnail});
   background-size: cover;
   &:hover {
     transform: scale(1.1);
-    animation: ${animation} 0.5s;
+    animation: ${animation.fade} 0.5s;
     cursor: pointer;
   }
-`
+`;
 
 const VideoBox = styled.div`
   display: flex;
@@ -58,7 +58,7 @@ const VideoBox = styled.div`
   padding: 10px;
   width: 100%;
   height: 100%;
-`
+`;
 
 const GridContainer = styled.div`
   display: grid;
@@ -66,14 +66,14 @@ const GridContainer = styled.div`
   grid-gap: 2vw;
   background-color: ${color.gray.lv1};
   padding: 10px;
-`
+`;
 
 const CheckBoxContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-`
+`;
 
 const CartContainer = styled.div`
   display: flex;
@@ -82,7 +82,7 @@ const CartContainer = styled.div`
   align-items: center;
   width: 100%;
   margin-top: 1vh;
-`
+`;
 
 const Title = styled.div`
   width: 200px;
@@ -93,44 +93,41 @@ const Title = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-`
-
-
+`;
 
 const MainView: React.FC = () => {
-  const [videoList, setVideoList] = useState<Video[]>([])
-  const [selectList, setSelectList] = useState(new Set())
-  const [modalId, setModalId] = useState("")
+  const [videoList, setVideoList] = useState<Video[]>([]);
+  const [selectList, setSelectList] = useState(new Set());
+  const [modalId, setModalId] = useState('');
 
   const videoListHandler = (vl: Video[]) => {
-    setVideoList(vl)
-  }
+    setVideoList(vl);
+  };
 
   const selectListHandler = (videoId: string, isChecked: boolean) => {
     if (isChecked) {
-      setSelectList((prev) => new Set(prev).add(videoId))
+      setSelectList((prev) => new Set(prev).add(videoId));
+    } else if (!isChecked && selectList.has(videoId)) {
+      const newSelectList = new Set(selectList);
+      newSelectList.delete(videoId);
+      setSelectList(newSelectList);
     }
-    else if (!isChecked && selectList.has(videoId)){
-      const newSelectList = new Set(selectList)
-      newSelectList.delete(videoId)
-      setSelectList(newSelectList)
-    }
-  }
+  };
 
   const modalHandler = (vid: string) => {
-    modalId ? setModalId("") : setModalId(vid)
-  }
+    modalId ? setModalId('') : setModalId(vid);
+  };
 
   const handleClickOutside = () => {
-    if(modalId) {
-      setModalId("")
+    if (modalId) {
+      setModalId('');
     }
-  }
+  };
 
   useEffect(() => {
-    window.addEventListener("click", handleClickOutside);
+    window.addEventListener('click', handleClickOutside);
     return () => {
-      window.removeEventListener("click", handleClickOutside);
+      window.removeEventListener('click', handleClickOutside);
     };
   });
 
@@ -138,34 +135,30 @@ const MainView: React.FC = () => {
     <>
       <Header getVl={videoListHandler} cartList={selectList}></Header>
       <GridContainer>
-      {videoList && videoList.map((video, idx) => {
-        const videoLink = `https://www.youtube.com/embed/${video.id}?rel=0&enablejsapi=1`
-        return (
-        <VideoBox key={`${video.id}_${idx}`}>
-          <YoutubeThumbnail thumbnail={video.thumbnail} onClick={() => modalHandler(video.id)}>
-          </YoutubeThumbnail>
-          {modalId && modalId===video.id && 
-            (<ModalContainer>
-              <YoutubeVideo src={videoLink}>
-              </YoutubeVideo>
-            </ModalContainer>
-            )
-          }
-          <CheckBoxContainer>
-            <Title>
-              {video.title}
-            </Title>
-            <CartContainer>
-              <CheckIcon></CheckIcon>
-              <CheckBox selectFunction={selectListHandler} vid={video.id}></CheckBox>
-            </CartContainer>
-          </CheckBoxContainer>
-        </VideoBox>
-        )
-      })}
+        {videoList &&
+          videoList.map((video, idx) => {
+            const videoLink = `https://www.youtube.com/embed/${video.id}?rel=0&enablejsapi=1`;
+            return (
+              <VideoBox key={`${video.id}_${idx}`}>
+                <YoutubeThumbnail thumbnail={video.thumbnail} onClick={() => modalHandler(video.id)}></YoutubeThumbnail>
+                {modalId && modalId === video.id && (
+                  <ModalContainer>
+                    <YoutubeVideo src={videoLink}></YoutubeVideo>
+                  </ModalContainer>
+                )}
+                <CheckBoxContainer>
+                  <Title>{video.title}</Title>
+                  <CartContainer>
+                    <CheckIcon></CheckIcon>
+                    <CheckBox selectFunction={selectListHandler} vid={video.id}></CheckBox>
+                  </CartContainer>
+                </CheckBoxContainer>
+              </VideoBox>
+            );
+          })}
       </GridContainer>
     </>
-  )
-}
+  );
+};
 
-export default MainView
+export default MainView;

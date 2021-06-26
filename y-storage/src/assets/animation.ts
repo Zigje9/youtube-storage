@@ -1,4 +1,4 @@
-import { keyframes } from 'styled-components' 
+import { keyframes } from 'styled-components';
 
 export const fade = keyframes`
   0% {
@@ -16,6 +16,13 @@ export const fade = keyframes`
   100% {
     opacity: 1;
   }
-`
+`;
 
-export default fade;
+export const spin = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
