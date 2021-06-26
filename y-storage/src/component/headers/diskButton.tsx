@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FloppyDisk } from '@styled-icons/icomoon/FloppyDisk';
 import color from '../../assets/colors';
+import { useHistory } from 'react-router-dom';
 
 const DiskIcon = styled(FloppyDisk)`
   width: 40px;
@@ -13,7 +14,9 @@ const DiskIcon = styled(FloppyDisk)`
 `;
 
 const Disk: React.FC = () => {
-  return <DiskIcon></DiskIcon>;
+  const history = useHistory();
+
+  return <DiskIcon onClick={() => history.push('/storage')}></DiskIcon>;
 };
 
 export default Disk;
