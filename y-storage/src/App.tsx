@@ -1,10 +1,15 @@
 import React from 'react';
-import MainView from './view/mainView'
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import MainView from './view/mainView';
 
 const App: React.FC = () => {
   return (
-    <MainView></MainView>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/" component={MainView} />
+      </Switch>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
