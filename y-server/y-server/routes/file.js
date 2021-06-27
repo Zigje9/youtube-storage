@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/index', (req, res, next) => {
-  console.log('index Router');
+router.post('/file', (req, res, next) => {
+  console.log(req);
   res.status(200).json({ h: 'i' });
 });
 
