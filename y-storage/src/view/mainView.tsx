@@ -11,6 +11,10 @@ interface Video {
   thumbnail: string;
 }
 
+interface SelectVideo {
+  [key: string]: string;
+}
+
 interface ThumbnailProps {
   thumbnail: string;
 }
@@ -97,7 +101,7 @@ const Title = styled.div`
 
 const MainView: React.FC = () => {
   const [videoList, setVideoList] = useState<Video[]>([]);
-  const [selectList, setSelectList] = useState<any>({});
+  const [selectList, setSelectList] = useState<SelectVideo>({});
   const [modalId, setModalId] = useState('');
 
   const videoListHandler = (vl: Video[]) => {
@@ -106,9 +110,9 @@ const MainView: React.FC = () => {
 
   const selectListHandler = (videoId: string, videoTitle: string, isChecked: boolean) => {
     if (isChecked) {
-      setSelectList((prevState: any) => ({ ...prevState, ...{ [videoId]: videoTitle } }));
+      setSelectList((prevState: SelectVideo) => ({ ...prevState, ...{ [videoId]: videoTitle } }));
     } else if (!isChecked && selectList.hasOwnProperty(videoId)) {
-      setSelectList((prevState: any) => {
+      setSelectList((prevState: SelectVideo) => {
         const newData = { ...prevState };
         delete newData[videoId];
         return newData;

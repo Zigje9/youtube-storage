@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { MusicNoteList } from '@styled-icons/bootstrap/MusicNoteList';
 import color from '../../assets/colors';
-
+interface SelectVideo {
+  [key: string]: string;
+}
 interface Props {
-  cartList: any;
+  cartList: SelectVideo;
 }
 interface HoverProps {
   isHover: boolean;

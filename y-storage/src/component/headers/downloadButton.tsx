@@ -2,8 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { Download } from '@styled-icons/boxicons-regular/Download';
 import color from '../../assets/colors';
+
+interface SelectVideo {
+  [key: string]: string;
+}
 interface Props {
-  cartList: any;
+  cartList: SelectVideo;
 }
 
 const DownButton = styled.button`

@@ -16,9 +16,13 @@ interface Video {
   thumbnail: string;
 }
 
+interface SelectVideo {
+  [key: string]: string;
+}
+
 interface Props {
   getVl: (vl: Video[]) => void;
-  cartList: any;
+  cartList: SelectVideo;
 }
 
 const HeaderContainer = styled.div`
