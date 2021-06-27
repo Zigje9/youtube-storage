@@ -97,20 +97,23 @@ const Title = styled.div`
 
 const MainView: React.FC = () => {
   const [videoList, setVideoList] = useState<Video[]>([]);
-  const [selectList, setSelectList] = useState(new Set());
+  const [selectList, setSelectList] = useState<any>({});
   const [modalId, setModalId] = useState('');
 
   const videoListHandler = (vl: Video[]) => {
     setVideoList(vl);
   };
 
-  const selectListHandler = (videoId: string, isChecked: boolean) => {
+  const selectListHandler = (videoId: string, videoTitle: string, isChecked: boolean) => {
     if (isChecked) {
-      setSelectList((prev) => new Set(prev).add(videoId));
-    } else if (!isChecked && selectList.has(videoId)) {
-      const newSelectList = new Set(selectList);
-      newSelectList.delete(videoId);
-      setSelectList(newSelectList);
+      setSelectList((prevState: any) => ({ ...prevState, ...{ [videoId]: videoTitle } }));
+    } else if (!isChecked && selectList.hasOwnProperty(videoId)) {
+      console.log(selectList);
+      setSelectList((prevState: any) => {
+        const newData = { ...prevState };
+        delete newData[videoId];
+        return newData;
+      });
     }
   };
 
@@ -150,7 +153,7 @@ const MainView: React.FC = () => {
                   <Title>{video.title}</Title>
                   <CartContainer>
                     <CheckIcon></CheckIcon>
-                    <CheckBox selectFunction={selectListHandler} vid={video.id}></CheckBox>
+                    <CheckBox selectFunction={selectListHandler} videoId={video.id} videoTitle={video.title}></CheckBox>
                   </CartContainer>
                 </CheckBoxContainer>
               </VideoBox>

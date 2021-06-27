@@ -1,26 +1,27 @@
-import React from 'react'
-import styled from 'styled-components'
-import color from '../../assets/colors'
+import React from 'react';
+import styled from 'styled-components';
+import color from '../../assets/colors';
 
-interface Props{
-  selectFunction:(videoId: string, isChecked: boolean) => void;
-  vid: string;
+interface Props {
+  selectFunction: (videoId: string, videoTitle: string, isChecked: boolean) => void;
+  videoId: string;
+  videoTitle: string;
 }
 
 const InputCheckBox = styled.input.attrs({
-  type: 'checkbox'
+  type: 'checkbox',
 })`
   position: absolute;
   opacity: 0;
   cursor: pointer;
   height: 0;
   width: 0;
-  :checked ~ span{
+  :checked ~ span {
     :after {
       display: block;
     }
   }
-`
+`;
 
 const CheckBoxContainer = styled.label`
   display: block;
@@ -33,7 +34,7 @@ const CheckBoxContainer = styled.label`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-`
+`;
 
 const SpanCheckBox = styled.span`
   position: absolute;
@@ -45,7 +46,7 @@ const SpanCheckBox = styled.span`
   border: 0.5px solid ${color.blue.lv5};
   border-radius: 5px;
   :after {
-    content: "";
+    content: '';
     position: absolute;
     display: none;
     left: 8px;
@@ -58,19 +59,20 @@ const SpanCheckBox = styled.span`
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
   }
-`
+`;
 
-const CheckBox: React.FC<Props> = ({...props}: Props) => {
-  const selectListHandler = props.selectFunction
+const CheckBox: React.FC<Props> = ({ ...props }: Props) => {
+  const selectListHandler = props.selectFunction;
   const checkHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    selectListHandler(props.vid, e.target.checked)
-  }
+    // selectListHandler(props.vid, e.target.checked)
+    selectListHandler(props.videoId, props.videoTitle, e.target.checked);
+  };
   return (
     <CheckBoxContainer>
       <InputCheckBox onChange={(e) => checkHandler(e)}></InputCheckBox>
       <SpanCheckBox></SpanCheckBox>
     </CheckBoxContainer>
-  )
-}
+  );
+};
 
-export default CheckBox
+export default CheckBox;

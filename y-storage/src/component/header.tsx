@@ -18,7 +18,7 @@ interface Video {
 
 interface Props {
   getVl: (vl: Video[]) => void;
-  cartList: Set<unknown> | any;
+  cartList: any;
 }
 
 const HeaderContainer = styled.div`
@@ -120,7 +120,7 @@ const Header: React.FC<Props> = ({ ...props }: Props) => {
     }
   };
 
-  const throttling = throttle(checkScroll, 100);
+  const throttling = throttle(checkScroll, 500);
 
   const keywordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);

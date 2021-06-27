@@ -1,15 +1,15 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Download } from '@styled-icons/boxicons-regular/Download'
-import color from '../../assets/colors'
+import React from 'react';
+import styled from 'styled-components';
+import { Download } from '@styled-icons/boxicons-regular/Download';
+import color from '../../assets/colors';
 interface Props {
-  cartList: Set<unknown> | any
+  cartList: any;
 }
 
 const DownButton = styled.button`
   background-color: inherit;
   border: none;
-`
+`;
 
 const DownIcon = styled(Download)`
   width: 40px;
@@ -18,20 +18,20 @@ const DownIcon = styled(Download)`
     transform: scale(1.2);
     cursor: pointer;
   }
-`
+`;
 
-const DownloadButton: React.FC<Props> = ({...props}: Props) => {
-  const cartList = [...props.cartList]
-  // what is diff checkListButton  ?...
+const DownloadButton: React.FC<Props> = ({ ...props }: Props) => {
+  const cartList = props.cartList;
   const downloadHandler = () => {
-    console.log("here", cartList)
-  }
+    console.log('here', cartList);
+    console.log('here');
+  };
 
   return (
     <DownButton onClick={() => downloadHandler()}>
       <DownIcon></DownIcon>
     </DownButton>
-  )
-}
+  );
+};
 
-export default DownloadButton
+export default DownloadButton;
