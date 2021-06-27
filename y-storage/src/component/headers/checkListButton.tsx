@@ -35,11 +35,23 @@ const DropDownBox = styled.div<HoverProps>`
 `;
 
 const DropDownContent = styled.div`
-  color: ${color.blue.lv4};
+  color: ${color.blue.lv6};
   padding: 12px 16px;
   text-decoration: none;
   display: block;
+  height: 80px;
+  overflow: hidden;
+  font-size: 1px;
 `;
+
+const BottomLine = styled.p`
+  width: 50%;
+  margin: 0 auto;
+  margin-bottom: 20%;
+  border: 0.5px dashed ${color.blue.lv2};
+`;
+
+const Container = styled.div``;
 
 const CheckListButton: React.FC<Props> = ({ ...props }: Props) => {
   const [isHover, setIsHover] = useState(false);
@@ -51,7 +63,12 @@ const CheckListButton: React.FC<Props> = ({ ...props }: Props) => {
       <DropDownBox isHover={isHover}>
         {cartList &&
           Object.keys(cartList).map((vid, idx) => {
-            return <DropDownContent key={`${vid}_${idx}`}>{cartList[vid]}</DropDownContent>;
+            return (
+              <Container key={`${vid}*${idx}`}>
+                <DropDownContent>{cartList[vid]}</DropDownContent>
+                <BottomLine></BottomLine>
+              </Container>
+            );
           })}
       </DropDownBox>
     </ListButton>

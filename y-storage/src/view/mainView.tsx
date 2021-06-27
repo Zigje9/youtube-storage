@@ -108,7 +108,6 @@ const MainView: React.FC = () => {
     if (isChecked) {
       setSelectList((prevState: any) => ({ ...prevState, ...{ [videoId]: videoTitle } }));
     } else if (!isChecked && selectList.hasOwnProperty(videoId)) {
-      console.log(selectList);
       setSelectList((prevState: any) => {
         const newData = { ...prevState };
         delete newData[videoId];
