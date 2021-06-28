@@ -26,3 +26,4 @@ yarn-error.log*
 .eslintrc.js
 .prettierrc.js
 .env
+/config
