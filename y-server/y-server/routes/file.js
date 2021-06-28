@@ -4,7 +4,7 @@ const router = express.Router();
 router.post('/file', (req, res, next) => {
   const fs = require('fs');
   const youtubedl = require('youtube-dl');
-  const options = ['--format=18'];
+  const options = ['--extract-audio', '--audio-format', 'mp3'];
   // const options = ['--audio-format FORMAT mp3'];
   const video = youtubedl(
     'http://www.youtube.com/watch?v=90AiXO1pAiA',
@@ -16,13 +16,13 @@ router.post('/file', (req, res, next) => {
 
   // Will be called when the download starts.
   video.on('info', function (info) {
-    console.log(info);
+    // console.log(info);
     console.log('Download started');
     console.log('filename: ' + info._filename);
     console.log('size: ' + info.size);
   });
 
-  video.pipe(fs.createWriteStream('myvideo.mp4'));
+  video.pipe(fs.createWriteStream('myvideo.mp3'));
   const { selectList } = req.body;
   if (selectList) {
     res.status(200).json({ h: 'i' });
