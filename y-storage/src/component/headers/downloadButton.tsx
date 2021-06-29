@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Download } from '@styled-icons/boxicons-regular/Download';
 import color from '../../assets/colors';
+import { postAxios } from '../../api/axios';
 
 interface SelectVideo {
   [key: string]: string;
@@ -26,11 +27,15 @@ const DownIcon = styled(Download)`
 
 const DownloadButton: React.FC<Props> = ({ ...props }: Props) => {
   const cartList = props.cartList;
-  const downloadHandler = () => {
+  const downloadHandler = async () => {
     const selectListLength = Object.keys(cartList).length;
     if (selectListLength >= 1 && selectListLength < 4) {
       if (confirm('다운로드를 시작하겠습니까?')) {
-        console.log('hh');
+        try {
+          await postAxios('http://localhost:3000/file', cartList);
+        } catch (error) {
+          console.log(error);
+        }
       } else {
         console.log('취소');
       }

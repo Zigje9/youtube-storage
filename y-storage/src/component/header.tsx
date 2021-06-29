@@ -10,6 +10,7 @@ import { getAxios } from '../api/axios';
 import throttle from '../utils/throttle';
 import * as animation from '../assets/animation';
 import color from '../assets/colors';
+import 'dotenv/config';
 interface Video {
   id: string;
   title: string;
@@ -91,6 +92,7 @@ const Header: React.FC<Props> = ({ ...props }: Props) => {
     setPrevKeyword(keyword);
     try {
       const res: any = await getAxios('/search', {
+        key: process.env.REACT_APP_YOUTUBE_API_KEY,
         part: 'snippet',
         q: keyword,
         maxResults: 10,
