@@ -27,8 +27,16 @@ const DownIcon = styled(Download)`
 const DownloadButton: React.FC<Props> = ({ ...props }: Props) => {
   const cartList = props.cartList;
   const downloadHandler = () => {
-    console.log('here', cartList);
-    console.log('here');
+    const selectListLength = Object.keys(cartList).length;
+    if (selectListLength >= 1 && selectListLength < 4) {
+      if (confirm('다운로드를 시작하겠습니까?')) {
+        console.log('hh');
+      } else {
+        console.log('취소');
+      }
+    } else {
+      alert('한번에 1개 ~ 3개의 음악을 다운받도록 선택해 주세요!');
+    }
   };
 
   return (
