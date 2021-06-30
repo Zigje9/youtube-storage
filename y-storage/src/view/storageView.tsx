@@ -9,6 +9,12 @@ const s3 = new AWS.S3({
 });
 
 const StorageView: React.FC = () => {
+  /*
+  s3 get objectlist 
+  object get thumbnail, title or video from youtube api
+  design UI 
+  set state
+  */
   const params: any = {
     Bucket: process.env.REACT_APP_AWS_BUCKET,
     MaxKeys: 100,
