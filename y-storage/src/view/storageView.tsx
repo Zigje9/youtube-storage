@@ -1,6 +1,7 @@
 import React from 'react';
 import 'dotenv/config';
 import AWS from 'aws-sdk';
+import { saveAs } from 'file-saver';
 
 const s3 = new AWS.S3({
   accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY,
@@ -27,42 +28,41 @@ const StorageView: React.FC = () => {
     }
   });
 
-  // async function downloadFromS3() {
-  //   const params: any = {
-  //     Bucket: process.env.REACT_APP_AWS_BUCKET,
-  //     Key: 'CzF_v-JnfT4.mp3',
-  //   };
-  //   const file: any = await s3
-  //     .getObject(params, (err, data) => {
-  //       if (err) {
-  //         console.log(err);
-  //       } else {
-  //         console.log(data);
-  //       }
-  //     })
-  //     .promise();
-  //   return {
-  //     data: file.Body,
-  //     mimetype: file.ContentType,
-  //   };
-  // }
-  function downloadWithBuffers() {
-    const myparam: any = {
-      Bucket: process.env.REACT_APP_AWS_BUCKET,
-      Key: 'CzF_v-JnfT4.mp3',
-    };
-    s3.getObject(myparam, (err, data) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log(data);
-      }
+  const getBlobObject = (fileName) => {
+    return new Promise((resolve, reject) => {
+      const params: any = {
+        Bucket: process.env.REACT_APP_AWS_BUCKET,
+        Key: fileName,
+      };
+      s3.getObject(params, (err, data: any) => {
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
+          const blob = new Blob([new Uint8Array(data.Body)], { type: 'audio/mpeg' });
+          resolve(blob);
+        }
+      });
     });
-  }
+  };
 
-  downloadWithBuffers();
+  const downloadFile = (mp3: any, fileName) => {
+    saveAs(mp3, fileName);
+    console.log(mp3);
+  };
 
-  return <h1>storage View</h1>;
+  const down = async (fileName) => {
+    const blobObject = await getBlobObject(fileName);
+    downloadFile(blobObject, fileName);
+  };
+
+  down(fileName);
+
+  return (
+    <>
+      <h1>storage View</h1>
+    </>
+  );
 };
 
 export default StorageView;
