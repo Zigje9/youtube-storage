@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import 'dotenv/config';
 import AWS from 'aws-sdk';
 import { saveAs } from 'file-saver';
@@ -9,58 +10,107 @@ const s3 = new AWS.S3({
   region: process.env.REACT_APP_AWS_REGION,
 });
 
-const StorageView: React.FC = () => {
-  /*
-  s3 get objectlist 
-  object get thumbnail, title or video from youtube api
-  design UI 
-  set state
-  */
-  const params: any = {
-    Bucket: process.env.REACT_APP_AWS_BUCKET,
-    MaxKeys: 100,
-  };
-  s3.listObjectsV2(params, (err, data) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(data);
-    }
+const getBlobObject = (fileName: string) => {
+  // ex) fileName : abcdef~~.mp3
+  return new Promise((resolve, reject) => {
+    const params: any = {
+      Bucket: process.env.REACT_APP_AWS_BUCKET,
+      Key: fileName,
+    };
+    s3.getObject(params, (err, data: any) => {
+      if (err) {
+        console.log(err);
+        reject(err);
+      } else {
+        const blob = new Blob([new Uint8Array(data.Body)], { type: 'audio/mpeg' });
+        resolve(blob);
+      }
+    });
   });
+};
 
-  const getBlobObject = (fileName) => {
+const downloadFile = (mp3: any, fileName: string) => {
+  saveAs(mp3, fileName);
+};
+
+const downloadFlow = async (fileName: string) => {
+  const blobObject = await getBlobObject(fileName);
+  downloadFile(blobObject, fileName);
+};
+
+const File = styled.div`
+  width: 200px;
+  height: 100px;
+  background-color: red;
+  margin-top: 10px;
+`;
+
+const StorageView: React.FC = () => {
+  const [fileList, setFileList] = useState<any>([]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const numberOfPost = 4;
+  const lastIdx = currentPage * numberOfPost;
+  const firstIdx = lastIdx - numberOfPost;
+  const totalPosts = fileList.length;
+
+  const getCurrentPostList = (fl: []) => fl.slice(firstIdx, lastIdx);
+
+  const pageNumbers = Array.from({ length: Math.ceil(totalPosts / numberOfPost) }, (_, idx) => idx + 1);
+
+  const getFileList = () => {
     return new Promise((resolve, reject) => {
       const params: any = {
         Bucket: process.env.REACT_APP_AWS_BUCKET,
-        Key: fileName,
+        MaxKeys: 100,
       };
-      s3.getObject(params, (err, data: any) => {
+      s3.listObjectsV2(params, (err, data: any) => {
         if (err) {
           console.log(err);
           reject(err);
         } else {
-          const blob = new Blob([new Uint8Array(data.Body)], { type: 'audio/mpeg' });
-          resolve(blob);
+          data.Contents.sort((a: any, b: any) => {
+            const dateA = new Date(a.LastModified).getTime();
+            const dateB = new Date(b.LastModified).getTime();
+            return dateA > dateB ? -1 : 1;
+          });
+          setFileList([...data.Contents]);
+          resolve('success');
         }
       });
     });
   };
 
-  const downloadFile = (mp3: any, fileName) => {
-    saveAs(mp3, fileName);
-    console.log(mp3);
+  const getFileFlow = async () => {
+    await getFileList();
   };
 
-  const down = async (fileName) => {
-    const blobObject = await getBlobObject(fileName);
-    downloadFile(blobObject, fileName);
-  };
-
-  down(fileName);
+  useEffect(() => {
+    getFileFlow();
+    // downloadFlow(fileName);
+  }, []);
 
   return (
     <>
-      <h1>storage View</h1>
+      {getCurrentPostList(fileList).map((e: any) => {
+        return (
+          <File key={e.Key} onClick={() => downloadFlow(e.Key)}>
+            {e.Key}
+          </File>
+        );
+      })}
+      {pageNumbers.map((number) => (
+        <div key={number}>
+          <span
+            onClick={() => {
+              setCurrentPage(number);
+              console.log(number);
+            }}
+          >
+            {number}
+          </span>
+        </div>
+      ))}
     </>
   );
 };
