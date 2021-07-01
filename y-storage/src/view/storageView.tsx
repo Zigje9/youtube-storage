@@ -13,6 +13,10 @@ interface GetFileParam {
   MaxKeys: number;
 }
 
+interface SpanProps {
+  nowSelect: boolean;
+}
+
 const s3 = new AWS.S3({
   accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY,
   secretAccessKey: process.env.REACT_APP_AWS_SECRET_KEY,
@@ -53,8 +57,15 @@ const File = styled.div`
   margin-top: 10px;
 `;
 
+const PageNumber = styled.span<SpanProps>`
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: ${(props) => (props.nowSelect ? 'bold' : 'none')};
+  text-decoration: ${(props) => (props.nowSelect ? 'underline' : 'none')};
+`;
+
 const PageContainer = styled.div`
-  width: 300px;
+  width: 600px;
   background-color: yellow;
   display: flex;
   justify-content: space-evenly;
@@ -64,7 +75,7 @@ const StorageView: React.FC = () => {
   const [fileList, setFileList] = useState<any>([]);
 
   const [currentPage, setCurrentPage] = useState(4);
-  const numberOfPost = 1;
+  const numberOfPost = 2;
   const lastIdx = currentPage * numberOfPost;
   const firstIdx = lastIdx - numberOfPost;
   const totalPosts = fileList.length;
@@ -126,15 +137,16 @@ const StorageView: React.FC = () => {
         );
       })}
       <PageContainer>
-        {setCenterPage(totalPageNumbers, currentPage).map((number: any) => (
+        {setCenterPage(totalPageNumbers, currentPage).map((number: number) => (
           <div key={number}>
-            <span
+            <PageNumber
               onClick={() => {
                 setCurrentPage(number);
               }}
+              nowSelect={number - currentPage === 0 ? true : false}
             >
               {number}
-            </span>
+            </PageNumber>
           </div>
         ))}
       </PageContainer>
