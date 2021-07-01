@@ -4,6 +4,15 @@ import 'dotenv/config';
 import AWS from 'aws-sdk';
 import { saveAs } from 'file-saver';
 
+interface GetBlobParam {
+  Bucket: string;
+  Key: string;
+}
+interface GetFileParam {
+  Bucket: string;
+  MaxKeys: number;
+}
+
 const s3 = new AWS.S3({
   accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY,
   secretAccessKey: process.env.REACT_APP_AWS_SECRET_KEY,
@@ -11,10 +20,9 @@ const s3 = new AWS.S3({
 });
 
 const getBlobObject = (fileName: string) => {
-  // ex) fileName : abcdef~~.mp3
   return new Promise((resolve, reject) => {
-    const params: any = {
-      Bucket: process.env.REACT_APP_AWS_BUCKET,
+    const params: GetBlobParam = {
+      Bucket: `${process.env.REACT_APP_AWS_BUCKET}`,
       Key: fileName,
     };
     s3.getObject(params, (err, data: any) => {
@@ -45,23 +53,42 @@ const File = styled.div`
   margin-top: 10px;
 `;
 
+const PageContainer = styled.div`
+  width: 300px;
+  background-color: yellow;
+  display: flex;
+  justify-content: space-evenly;
+`;
+
 const StorageView: React.FC = () => {
   const [fileList, setFileList] = useState<any>([]);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const numberOfPost = 4;
+  const [currentPage, setCurrentPage] = useState(4);
+  const numberOfPost = 1;
   const lastIdx = currentPage * numberOfPost;
   const firstIdx = lastIdx - numberOfPost;
   const totalPosts = fileList.length;
 
   const getCurrentPostList = (fl: []) => fl.slice(firstIdx, lastIdx);
 
-  const pageNumbers = Array.from({ length: Math.ceil(totalPosts / numberOfPost) }, (_, idx) => idx + 1);
+  const totalPageNumbers = Array.from({ length: Math.ceil(totalPosts / numberOfPost) }, (_, idx) => idx + 1);
+
+  const setCenterPage = (arr: any, centerIdx: any) => {
+    const left = centerIdx - 3;
+    if (left < 0) {
+      return arr.slice(0, 5);
+    }
+    const right = centerIdx + 2;
+    if (right > totalPageNumbers.length) {
+      return arr.slice(totalPageNumbers.length - 5, totalPageNumbers.length);
+    }
+    return arr.slice(left, right);
+  };
 
   const getFileList = () => {
     return new Promise((resolve, reject) => {
-      const params: any = {
-        Bucket: process.env.REACT_APP_AWS_BUCKET,
+      const params: GetFileParam = {
+        Bucket: `${process.env.REACT_APP_AWS_BUCKET}`,
         MaxKeys: 100,
       };
       s3.listObjectsV2(params, (err, data: any) => {
@@ -87,7 +114,6 @@ const StorageView: React.FC = () => {
 
   useEffect(() => {
     getFileFlow();
-    // downloadFlow(fileName);
   }, []);
 
   return (
@@ -99,18 +125,19 @@ const StorageView: React.FC = () => {
           </File>
         );
       })}
-      {pageNumbers.map((number) => (
-        <div key={number}>
-          <span
-            onClick={() => {
-              setCurrentPage(number);
-              console.log(number);
-            }}
-          >
-            {number}
-          </span>
-        </div>
-      ))}
+      <PageContainer>
+        {setCenterPage(totalPageNumbers, currentPage).map((number: any) => (
+          <div key={number}>
+            <span
+              onClick={() => {
+                setCurrentPage(number);
+              }}
+            >
+              {number}
+            </span>
+          </div>
+        ))}
+      </PageContainer>
     </>
   );
 };
