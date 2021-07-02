@@ -51,31 +51,56 @@ const downloadFlow = async (fileName: string) => {
 };
 
 const File = styled.div`
-  width: 200px;
-  height: 100px;
+  width: 80%;
+  height: 15%;
   background-color: red;
-  margin-top: 10px;
+  margin-top: 4.5%;
 `;
 
 const PageNumber = styled.span<SpanProps>`
   cursor: pointer;
   font-size: 20px;
-  font-weight: ${(props) => (props.nowSelect ? 'bold' : 'none')};
+  font-weight: ${(props) => (props.nowSelect ? 'bold' : 'lighter')};
   text-decoration: ${(props) => (props.nowSelect ? 'underline' : 'none')};
 `;
 
 const PageContainer = styled.div`
-  width: 600px;
+  width: 100%;
+  height: 8vh;
   background-color: yellow;
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
+`;
+
+const FileContainer = styled.div`
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  background-color: lightgoldenrodyellow;
+  align-items: center;
+`;
+
+const StorageHeader = styled.div`
+  width: 100%;
+  height: 12vh;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    96deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(9, 9, 121, 1) 18%,
+    rgba(41, 90, 186, 1) 41%,
+    rgba(6, 68, 160, 1) 76%,
+    rgba(0, 212, 255, 1) 95%
+  );
 `;
 
 const StorageView: React.FC = () => {
   const [fileList, setFileList] = useState<any>([]);
 
-  const [currentPage, setCurrentPage] = useState(4);
-  const numberOfPost = 2;
+  const [currentPage, setCurrentPage] = useState(1);
+  const numberOfPost = 4;
   const lastIdx = currentPage * numberOfPost;
   const firstIdx = lastIdx - numberOfPost;
   const totalPosts = fileList.length;
@@ -129,13 +154,16 @@ const StorageView: React.FC = () => {
 
   return (
     <>
-      {getCurrentPostList(fileList).map((e: any) => {
-        return (
-          <File key={e.Key} onClick={() => downloadFlow(e.Key)}>
-            {e.Key}
-          </File>
-        );
-      })}
+      <StorageHeader></StorageHeader>
+      <FileContainer>
+        {getCurrentPostList(fileList).map((e: any) => {
+          return (
+            <File key={e.Key} onClick={() => downloadFlow(e.Key)}>
+              {e.Key}
+            </File>
+          );
+        })}
+      </FileContainer>
       <PageContainer>
         {setCenterPage(totalPageNumbers, currentPage).map((number: number) => (
           <div key={number}>
