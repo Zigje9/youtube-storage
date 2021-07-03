@@ -147,7 +147,6 @@ const StorageView: React.FC = () => {
             const dateB = new Date(b.LastModified).getTime();
             return dateA > dateB ? -1 : 1;
           });
-          console.log(data.Contents);
           setFileList([...data.Contents]);
           resolve('success');
         }
