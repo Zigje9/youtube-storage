@@ -61,9 +61,9 @@ const File = styled.div`
 `;
 
 const Thumbnail = styled.div<ThumbnailProps>`
-  height: 160px;
-  width: 280px;
-  background-image: url(${(props) => 'https://i.ytimg.com/vi/' + props.videoId + '/mqdefault.jpg'});
+  height: 80px;
+  width: 140px;
+  background-image: url(${(props) => 'https://i.ytimg.com/vi/' + props.videoId.slice(0, -4) + '/mqdefault.jpg'});
   background-size: cover;
 `;
 
