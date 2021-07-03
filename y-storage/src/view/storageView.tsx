@@ -13,6 +13,9 @@ interface GetFileParam {
   MaxKeys: number;
 }
 
+interface ThumbnailProps {
+  videoId: string;
+}
 interface SpanProps {
   nowSelect: boolean;
 }
@@ -55,6 +58,13 @@ const File = styled.div`
   height: 15%;
   background-color: red;
   margin-top: 4.5%;
+`;
+
+const Thumbnail = styled.div<ThumbnailProps>`
+  height: 160px;
+  width: 280px;
+  background-image: url(${(props) => 'https://i.ytimg.com/vi/' + props.videoId + '/mqdefault.jpg'});
+  background-size: cover;
 `;
 
 const PageNumber = styled.span<SpanProps>`
@@ -137,7 +147,7 @@ const StorageView: React.FC = () => {
             const dateB = new Date(b.LastModified).getTime();
             return dateA > dateB ? -1 : 1;
           });
-          console.log(fileList);
+          console.log(data.Contents);
           setFileList([...data.Contents]);
           resolve('success');
         }
@@ -161,6 +171,7 @@ const StorageView: React.FC = () => {
           return (
             <File key={e.Key} onClick={() => downloadFlow(e.Key)}>
               {e.Key}
+              <Thumbnail videoId={e.Key}></Thumbnail>
             </File>
           );
         })}

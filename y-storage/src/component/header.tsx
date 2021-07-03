@@ -109,6 +109,7 @@ const Header: React.FC<Props> = ({ ...props }: Props) => {
         };
         return infos;
       });
+      console.log(vl);
       setItem([...newItem, ...vl]);
       videoListHandler([...newItem, ...vl]);
       setLoading(false);
