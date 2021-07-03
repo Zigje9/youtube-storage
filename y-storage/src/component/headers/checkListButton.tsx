@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { MusicNoteList } from '@styled-icons/bootstrap/MusicNoteList';
 import color from '../../assets/colors';
 interface SelectVideo {
-  [key: string]: string;
+  [key: string]: [string, string];
 }
 interface Props {
   cartList: SelectVideo;

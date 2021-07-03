@@ -5,7 +5,7 @@ import color from '../../assets/colors';
 import { postAxios } from '../../api/axios';
 
 interface SelectVideo {
-  [key: string]: string;
+  [key: string]: [string, string];
 }
 interface Props {
   cartList: SelectVideo;

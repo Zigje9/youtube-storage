@@ -18,7 +18,7 @@ interface Video {
 }
 
 interface SelectVideo {
-  [key: string]: string;
+  [key: string]: [string, string];
 }
 
 interface Props {

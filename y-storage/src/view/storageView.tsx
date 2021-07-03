@@ -100,7 +100,7 @@ const StorageView: React.FC = () => {
   const [fileList, setFileList] = useState<any>([]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const numberOfPost = 4;
+  const numberOfPost = 5;
   const lastIdx = currentPage * numberOfPost;
   const firstIdx = lastIdx - numberOfPost;
   const totalPosts = fileList.length;
@@ -137,6 +137,7 @@ const StorageView: React.FC = () => {
             const dateB = new Date(b.LastModified).getTime();
             return dateA > dateB ? -1 : 1;
           });
+          console.log(fileList);
           setFileList([...data.Contents]);
           resolve('success');
         }

@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import color from '../../assets/colors';
 
 interface Props {
-  selectFunction: (videoId: string, videoTitle: string, isChecked: boolean) => void;
+  selectFunction: (videoId: string, videoTitle: string, videoThumbnail: string, isChecked: boolean) => void;
   videoId: string;
   videoTitle: string;
+  videoThumbnail: string;
 }
 
 const InputCheckBox = styled.input.attrs({
@@ -64,7 +65,7 @@ const SpanCheckBox = styled.span`
 const CheckBox: React.FC<Props> = ({ ...props }: Props) => {
   const selectListHandler = props.selectFunction;
   const checkHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    selectListHandler(props.videoId, props.videoTitle, e.target.checked);
+    selectListHandler(props.videoId, props.videoTitle, props.videoThumbnail, e.target.checked);
   };
   return (
     <CheckBoxContainer>

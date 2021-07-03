@@ -12,7 +12,7 @@ interface Video {
 }
 
 interface SelectVideo {
-  [key: string]: string;
+  [key: string]: [string, string];
 }
 
 interface ThumbnailProps {
@@ -108,9 +108,9 @@ const MainView: React.FC = () => {
     setVideoList(vl);
   };
 
-  const selectListHandler = (videoId: string, videoTitle: string, isChecked: boolean) => {
+  const selectListHandler = (videoId: string, videoTitle: string, videoThumbnail: string, isChecked: boolean) => {
     if (isChecked) {
-      setSelectList((prevState: SelectVideo) => ({ ...prevState, ...{ [videoId]: videoTitle } }));
+      setSelectList((prevState: SelectVideo) => ({ ...prevState, ...{ [videoId]: [videoTitle, videoThumbnail] } }));
     } else if (!isChecked && selectList.hasOwnProperty(videoId)) {
       setSelectList((prevState: SelectVideo) => {
         const newData = { ...prevState };
@@ -156,7 +156,12 @@ const MainView: React.FC = () => {
                   <Title>{video.title}</Title>
                   <CartContainer>
                     <CheckIcon></CheckIcon>
-                    <CheckBox selectFunction={selectListHandler} videoId={video.id} videoTitle={video.title}></CheckBox>
+                    <CheckBox
+                      selectFunction={selectListHandler}
+                      videoId={video.id}
+                      videoTitle={video.title}
+                      videoThumbnail={video.thumbnail}
+                    ></CheckBox>
                   </CartContainer>
                 </CheckBoxContainer>
               </VideoBox>
