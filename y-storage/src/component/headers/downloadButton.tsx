@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Download } from '@styled-icons/boxicons-regular/Download';
 import color from '../../assets/colors';
 import { postAxios } from '../../api/axios';
+import 'dotenv/config';
 
 interface SelectVideo {
   [key: string]: [string, string];
@@ -32,7 +33,7 @@ const DownloadButton: React.FC<Props> = ({ ...props }: Props) => {
     if (selectListLength >= 1 && selectListLength < 4) {
       if (confirm('다운로드를 시작하겠습니까?')) {
         try {
-          await postAxios('http://localhost:3000/file', cartList);
+          await postAxios(`${process.env.REACT_APP_SERVER}/file`, cartList);
         } catch (error) {
           console.log(error);
         }
