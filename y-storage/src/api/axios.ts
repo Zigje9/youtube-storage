@@ -22,7 +22,6 @@ export const postAxios = (reqUrl: string, reqData: Record<string, unknown>): Pro
     .create({
       method: 'post',
       timeout: 10000,
-      withCredentials: true,
     })
     .request({ url: reqUrl, data: reqData });
 };
