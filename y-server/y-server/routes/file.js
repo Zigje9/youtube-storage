@@ -3,7 +3,7 @@ const router = express.Router();
 const videoWork = require('../service/videoWork');
 
 router.post('/file', (req, res, next) => {
-  const { selectList } = req.body;
+  const selectList = req.body;
   if (selectList) {
     Object.entries(selectList).forEach(([videoId, videoTitle]) => {
       videoWork(videoId);
