@@ -8,8 +8,11 @@ import changeURL from '../utils/changeURL';
 import changeSize from '../utils/changeSize';
 import timer from '../utils/timer';
 import { FolderMusic } from '@styled-icons/entypo/FolderMusic';
+import { TagQuestionMark } from '@styled-icons/fluentui-system-filled/TagQuestionMark';
+import { Time } from '@styled-icons/boxicons-solid/Time';
 import * as animation from '../assets/animation';
 import StorageHeader from '../component/sotrageHeader';
+import { fileInfoAlert, timeInfoAlert } from '../utils/infoAlert';
 
 interface GetBlobParam {
   Bucket: string;
@@ -56,7 +59,7 @@ const downloadFile = (mp3: any, fileName: string) => {
 };
 
 const downloadFlow = async (fileName: string) => {
-  if (confirm('다운로드를 시작하겠습니까?')) {
+  if (confirm('로컬로 다운로드를 시작하겠습니까?')) {
     try {
       const blobObject = await getBlobObject(fileName);
       downloadFile(blobObject, fileName);
@@ -78,11 +81,37 @@ const File = styled.div`
   background-color: ${color.white.lv1};
 `;
 
+const Box = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+`;
+
 const Thumbnail = styled.div<ThumbnailProps>`
   height: 80px;
   width: 140px;
   background-image: url(${(props) => changeURL(props.videoId)});
   background-size: cover;
+`;
+
+const FileInfoIcon = styled(TagQuestionMark)`
+  width: 30px;
+  color: ${color.blue.lv3};
+  cursor: pointer;
+  &:hover {
+    animation: ${animation.fill} 0.7s ease-out infinite;
+  }
+`;
+
+const TimeInfoIcon = styled(Time)`
+  width: 30px;
+  color: ${color.blue.lv3};
+  cursor: pointer;
+  &:hover {
+    animation: ${animation.fill} 0.7s ease-out infinite;
+  }
 `;
 
 const DownLoadIcon = styled(FolderMusic)`
@@ -181,6 +210,7 @@ const StorageView: React.FC = () => {
             const dateB = new Date(b.LastModified).getTime();
             return dateA > dateB ? -1 : 1;
           });
+          console.log(data);
           setFileList([...data.Contents]);
           resolve('success');
         }
@@ -204,9 +234,18 @@ const StorageView: React.FC = () => {
           return (
             <File key={e.Key}>
               <Thumbnail videoId={e.Key}></Thumbnail>
-              <div>{changeSize(e.Size)}</div>
-              <div>{timer(e.LastModified)}</div>
-              <DownLoadIcon onClick={() => downloadFlow(e.Key)}></DownLoadIcon>
+              <Box>
+                <FileInfoIcon onClick={() => fileInfoAlert(e.Key, e.Size)}></FileInfoIcon>
+                <div>{changeSize(e.Size)}</div>
+              </Box>
+              <Box>
+                <TimeInfoIcon onClick={() => timeInfoAlert(e.LastModified)}></TimeInfoIcon>
+                <div>{timer(e.LastModified)}</div>
+              </Box>
+              <Box>
+                <DownLoadIcon onClick={() => downloadFlow(e.Key)}></DownLoadIcon>
+                <div>다운로드</div>
+              </Box>
             </File>
           );
         })}
