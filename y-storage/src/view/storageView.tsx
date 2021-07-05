@@ -4,6 +4,7 @@ import 'dotenv/config';
 import AWS from 'aws-sdk';
 import { saveAs } from 'file-saver';
 import color from '../assets/colors';
+import changeURL from '../utils/changeURL';
 
 interface GetBlobParam {
   Bucket: string;
@@ -52,10 +53,6 @@ const downloadFile = (mp3: any, fileName: string) => {
 const downloadFlow = async (fileName: string) => {
   const blobObject = await getBlobObject(fileName);
   downloadFile(blobObject, fileName);
-};
-
-const changeURL = (vid: string) => {
-  return `https://i.ytimg.com/vi/${vid.slice(0, -4)}/mqdefault.jpg`;
 };
 
 const File = styled.div`
