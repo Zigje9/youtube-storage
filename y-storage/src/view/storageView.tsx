@@ -15,15 +15,10 @@ import StorageHeader from '../component/sotrageHeader';
 import { fileInfoAlert, timeInfoAlert } from '../utils/infoAlert';
 import { postAxios } from '../api/axios';
 
-interface GetBlobParam {
-  Bucket: string;
-  Key: string;
-}
 interface GetFileParam {
   Bucket: string;
   MaxKeys: number;
 }
-
 interface ThumbnailProps {
   videoId: string;
 }
@@ -39,25 +34,10 @@ const s3 = new AWS.S3({
 
 const getBlobObject = (fileName: string) => {
   return new Promise(async (resolve, reject) => {
-    // const params: GetBlobParam = {
-    //   Bucket: `${process.env.REACT_APP_AWS_BUCKET}`,
-    //   Key: fileName,
-    // };
-    // s3.getObject(params, (err, data: any) => {
-    //   if (err) {
-    //     console.log(err);
-    //     reject(err);
-    //   } else {
-    //     const blob = new Blob([new Uint8Array(data.Body)], { type: 'audio/mpeg' });
-    //     resolve(blob);
-    //   }
-    // });
-
     try {
       const reqData = { fileName };
       const res: any = await postAxios(`${process.env.REACT_APP_SERVER}/blob`, reqData);
-      console.log(res.data);
-      const blob = new Blob([new Uint8Array(res.data.Body)], { type: 'audio/mpeg' });
+      const blob = new Blob([new Uint8Array(res.data.data)], { type: 'audio/mpeg' });
       resolve(blob);
     } catch (error) {
       reject(error);
