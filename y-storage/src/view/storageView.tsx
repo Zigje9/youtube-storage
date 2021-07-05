@@ -164,15 +164,20 @@ const StorageView: React.FC = () => {
   const totalPageNumbers = Array.from({ length: Math.ceil(totalPosts / numberOfPost) }, (_, idx) => idx + 1);
 
   const setCenterPage = (arr: any, centerIdx: any) => {
-    const left = centerIdx - 3;
-    if (left < 0) {
+    const total = totalPageNumbers.length;
+    console.log(centerIdx, totalPageNumbers.length);
+    if (total <= 5) {
+      return arr;
+    }
+    if (centerIdx <= 3) {
       return arr.slice(0, 5);
     }
-    const right = centerIdx + 2;
-    if (right > totalPageNumbers.length) {
-      return arr.slice(totalPageNumbers.length - 5, totalPageNumbers.length);
+
+    if (centerIdx > total - 2) {
+      return arr.slice(total - 4);
     }
-    return arr.slice(left, right);
+
+    return arr.slice(centerIdx - 3, centerIdx + 2);
   };
 
   const getFileList = () => {
@@ -191,7 +196,6 @@ const StorageView: React.FC = () => {
             const dateB = new Date(b.LastModified).getTime();
             return dateA > dateB ? -1 : 1;
           });
-          console.log(data);
           setFileList([...data.Contents]);
           resolve('success');
         }
