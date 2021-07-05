@@ -4,7 +4,9 @@ import Logo from './headers/logo';
 import DiskButton from './headers/diskButton';
 import getDate from '../utils/getDate';
 import { FiberNew } from '@styled-icons/material-sharp/FiberNew';
+import { TextNumberListLtr } from '@styled-icons/fluentui-system-filled/TextNumberListLtr';
 import color from '../assets/colors';
+import { newInfo, totalNumber } from '../utils/infoAlert';
 interface Props {
   numOfFile: number;
   lastModified: any;
@@ -12,7 +14,7 @@ interface Props {
 
 const HeaderContainer = styled.div`
   display: grid;
-  grid-template-columns: 5% 10% 15% 25% 5% 25% 5% 5%;
+  grid-template-columns: 5% 10% 15% 20% 5% 25% 5% 10%;
   align-items: center;
   height: 12vh;
   background: rgb(2, 0, 36);
@@ -31,12 +33,27 @@ const DIV = styled.div`
 `;
 
 const NewIcon = styled(FiberNew)`
-  width: 30px;
-  color: ${color.blue.lv3};
+  width: 40px;
+  color: ${color.white.lv1};
   cursor: pointer;
   &:hover {
     transform: scale(1.2);
   }
+`;
+
+const NumIcon = styled(TextNumberListLtr)`
+  width: 40px;
+  color: ${color.white.lv1};
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
+const Text = styled.p`
+  color: ${color.white.lv1};
+  font-weight: bold;
+  font-style: oblique;
 `;
 
 const StorageHeader: React.FC<Props> = ({ ...props }: Props) => {
@@ -47,11 +64,11 @@ const StorageHeader: React.FC<Props> = ({ ...props }: Props) => {
       <DIV></DIV>
       <Logo reload={false}></Logo>
       <DiskButton reload={true}></DiskButton>
-      <NewIcon></NewIcon>
-      <DIV>{getDate(last)}</DIV>
-      <DIV>{props.numOfFile}</DIV>
       <DIV></DIV>
-      <DIV></DIV>
+      <NewIcon onClick={() => newInfo()}></NewIcon>
+      <Text>{getDate(last)}</Text>
+      <NumIcon onClick={() => totalNumber()}></NumIcon>
+      <Text>{props.numOfFile}개의 곡</Text>
     </HeaderContainer>
   );
 };
