@@ -6,6 +6,7 @@ import { saveAs } from 'file-saver';
 import color from '../assets/colors';
 import changeURL from '../utils/changeURL';
 import changeSize from '../utils/changeSize';
+import timer from '../utils/timer';
 import { FolderMusic } from '@styled-icons/entypo/FolderMusic';
 import * as animation from '../assets/animation';
 
@@ -215,7 +216,7 @@ const StorageView: React.FC = () => {
             <File key={e.Key}>
               <Thumbnail videoId={e.Key}></Thumbnail>
               <div>{changeSize(e.Size)}</div>
-              <div>lastmodified</div>
+              <div>{timer(e.LastModified)}</div>
               <DownLoadIcon onClick={() => downloadFlow(e.Key)}></DownLoadIcon>
             </File>
           );
