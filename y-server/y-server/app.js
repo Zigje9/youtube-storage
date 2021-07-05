@@ -8,7 +8,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: '*',
   credentials: true,
 };
 
@@ -18,8 +18,10 @@ app.use(cors(corsOptions));
 app.use(cookieParser());
 
 const fileRouter = require('./routes/file');
+const searchRouter = require('./routes/search');
 
 app.use(fileRouter);
+app.use(searchRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
