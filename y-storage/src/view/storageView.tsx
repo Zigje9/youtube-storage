@@ -5,6 +5,9 @@ import AWS from 'aws-sdk';
 import { saveAs } from 'file-saver';
 import color from '../assets/colors';
 import changeURL from '../utils/changeURL';
+import changeSize from '../utils/changeSize';
+import { FolderMusic } from '@styled-icons/entypo/FolderMusic';
+import * as animation from '../assets/animation';
 
 interface GetBlobParam {
   Bucket: string;
@@ -71,6 +74,15 @@ const Thumbnail = styled.div<ThumbnailProps>`
   width: 140px;
   background-image: url(${(props) => changeURL(props.videoId)});
   background-size: cover;
+`;
+
+const DownLoadIcon = styled(FolderMusic)`
+  width: 30px;
+  color: ${color.blue.lv3};
+  cursor: pointer;
+  &:hover {
+    animation: ${animation.fill} 0.7s ease-out infinite;
+  }
 `;
 
 const PageNumber = styled.span<SpanProps>`
@@ -185,7 +197,7 @@ const StorageView: React.FC = () => {
   useEffect(() => {
     getFileFlow();
   }, []);
-  // onClick={() => downloadFlow(e.Key)
+
   return (
     <>
       <StorageHeader></StorageHeader>
@@ -194,9 +206,9 @@ const StorageView: React.FC = () => {
           return (
             <File key={e.Key}>
               <Thumbnail videoId={e.Key}></Thumbnail>
-              <div>{e.Key}</div>
+              <div>{changeSize(e.Size)}</div>
               <div>lastmodified</div>
-              <div>download</div>
+              <DownLoadIcon onClick={() => downloadFlow(e.Key)}></DownLoadIcon>
             </File>
           );
         })}
