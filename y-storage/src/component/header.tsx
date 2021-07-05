@@ -6,7 +6,7 @@ import DownloadButton from './headers/downloadButton';
 import CheckListButton from './headers/checkListButton';
 import DiskButton from './headers/diskButton';
 import Logo from './headers/logo';
-import { getAxios } from '../api/axios';
+import { postAxios } from '../api/axios';
 import throttle from '../utils/throttle';
 import * as animation from '../assets/animation';
 import color from '../assets/colors';
@@ -91,13 +91,18 @@ const Header: React.FC<Props> = ({ ...props }: Props) => {
     }
     setPrevKeyword(keyword);
     try {
-      const res: any = await getAxios('/search', {
-        key: process.env.REACT_APP_YOUTUBE_API_KEY,
-        part: 'snippet',
+      // const res: any = await getAxios('/search', {
+      //   key: process.env.REACT_APP_YOUTUBE_API_KEY,
+      //   part: 'snippet',
+      //   q: keyword,
+      //   maxResults: 10,
+      //   pageToken: nextToken,
+      // });
+      const reqData = {
         q: keyword,
-        maxResults: 10,
         pageToken: nextToken,
-      });
+      };
+      const res: any = await postAxios('/search', reqData);
       if (res.data.nextPageToken) {
         setNextToken(res.data.nextPageToken);
       }
