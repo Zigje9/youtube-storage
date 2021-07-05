@@ -5,6 +5,7 @@ import DiskButton from './headers/diskButton';
 import getDate from '../utils/getDate';
 import { FiberNew } from '@styled-icons/material-sharp/FiberNew';
 import { TextNumberListLtr } from '@styled-icons/fluentui-system-filled/TextNumberListLtr';
+import { Github } from '@styled-icons/bootstrap/Github';
 import color from '../assets/colors';
 import { newInfo, totalNumber } from '../utils/infoAlert';
 interface Props {
@@ -14,7 +15,7 @@ interface Props {
 
 const HeaderContainer = styled.div`
   display: grid;
-  grid-template-columns: 5% 10% 15% 20% 5% 25% 5% 10%;
+  grid-template-columns: 5% 10% 20% 5% 25% 5% 10% 15%;
   align-items: center;
   height: 12vh;
   background: rgb(2, 0, 36);
@@ -50,6 +51,15 @@ const NumIcon = styled(TextNumberListLtr)`
   }
 `;
 
+const GitHubIcon = styled(Github)`
+  width: 40px;
+  color: ${color.white.lv1};
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
 const Text = styled.p`
   color: ${color.white.lv1};
   font-weight: bold;
@@ -64,11 +74,11 @@ const StorageHeader: React.FC<Props> = ({ ...props }: Props) => {
       <DIV></DIV>
       <Logo reload={false}></Logo>
       <DiskButton reload={true}></DiskButton>
-      <DIV></DIV>
       <NewIcon onClick={() => newInfo()}></NewIcon>
       <Text>{getDate(last)}</Text>
       <NumIcon onClick={() => totalNumber()}></NumIcon>
-      <Text>{props.numOfFile}개의 곡</Text>
+      <Text>{props.numOfFile}개의 노래</Text>
+      <GitHubIcon onClick={() => window.open('https://github.com/Zigje9/youtube-storage')}></GitHubIcon>
     </HeaderContainer>
   );
 };
