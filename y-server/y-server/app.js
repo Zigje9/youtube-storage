@@ -19,9 +19,11 @@ app.use(cookieParser());
 
 const fileRouter = require('./routes/file');
 const searchRouter = require('./routes/search');
+const blobRouter = require('./routes/blob');
 
 app.use(fileRouter);
 app.use(searchRouter);
+app.use(blobRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
