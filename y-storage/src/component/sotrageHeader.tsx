@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import Logo from './headers/logo';
 import DiskButton from './headers/diskButton';
 import getDate from '../utils/getDate';
+import { FiberNew } from '@styled-icons/material-sharp/FiberNew';
+import color from '../assets/colors';
 interface Props {
   numOfFile: number;
   lastModified: any;
@@ -28,8 +30,16 @@ const DIV = styled.div`
   width: 100%;
 `;
 
+const NewIcon = styled(FiberNew)`
+  width: 30px;
+  color: ${color.blue.lv3};
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
 const StorageHeader: React.FC<Props> = ({ ...props }: Props) => {
-  // const last = String(props.lastModified?.LastModified).split(' ');
   const last = new Date(props.lastModified?.LastModified);
 
   return (
@@ -37,9 +47,9 @@ const StorageHeader: React.FC<Props> = ({ ...props }: Props) => {
       <DIV></DIV>
       <Logo reload={false}></Logo>
       <DiskButton reload={true}></DiskButton>
+      <NewIcon></NewIcon>
       <DIV>{getDate(last)}</DIV>
       <DIV>{props.numOfFile}</DIV>
-      <DIV></DIV>
       <DIV></DIV>
       <DIV></DIV>
     </HeaderContainer>
