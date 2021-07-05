@@ -5,6 +5,9 @@ const getAxios = require('../service/axios');
 
 router.post('/search', async (req, res, next) => {
   const { q, pageToken } = req.body;
+  console.log(req.body);
+  console.log(q);
+  console.log(pageToken);
   try {
     const data = await getAxios('/search', {
       key: process.env.YOUTUBE_API_KEY,
