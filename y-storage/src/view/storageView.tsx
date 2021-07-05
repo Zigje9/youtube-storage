@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import 'dotenv/config';
 import AWS from 'aws-sdk';
 import { saveAs } from 'file-saver';
+import color from '../assets/colors';
 
 interface GetBlobParam {
   Bucket: string;
@@ -54,10 +55,13 @@ const downloadFlow = async (fileName: string) => {
 };
 
 const File = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   width: 80%;
-  height: 15%;
+  height: 17%;
   background-color: red;
-  margin-top: 4.5%;
+  border-radius: 20px;
 `;
 
 const Thumbnail = styled.div<ThumbnailProps>`
@@ -77,7 +81,6 @@ const PageNumber = styled.span<SpanProps>`
 const PageContainer = styled.div`
   width: 100%;
   height: 8vh;
-  background-color: yellow;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -88,8 +91,9 @@ const FileContainer = styled.div`
   height: 80vh;
   display: flex;
   flex-direction: column;
-  background-color: lightgoldenrodyellow;
+  background-color: ${color.gray.lv1};
   align-items: center;
+  justify-content: space-evenly;
 `;
 
 const StorageHeader = styled.div`
@@ -110,7 +114,7 @@ const StorageView: React.FC = () => {
   const [fileList, setFileList] = useState<any>([]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const numberOfPost = 5;
+  const numberOfPost = 4;
   const lastIdx = currentPage * numberOfPost;
   const firstIdx = lastIdx - numberOfPost;
   const totalPosts = fileList.length;
@@ -161,16 +165,18 @@ const StorageView: React.FC = () => {
   useEffect(() => {
     getFileFlow();
   }, []);
-
+  // onClick={() => downloadFlow(e.Key)
   return (
     <>
       <StorageHeader></StorageHeader>
       <FileContainer>
         {getCurrentPostList(fileList).map((e: any) => {
           return (
-            <File key={e.Key} onClick={() => downloadFlow(e.Key)}>
-              {e.Key}
+            <File key={e.Key}>
               <Thumbnail videoId={e.Key}></Thumbnail>
+              <div>id</div>
+              <div>lastmodified</div>
+              <div>download</div>
             </File>
           );
         })}
