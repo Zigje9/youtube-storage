@@ -9,7 +9,7 @@ router.post('/search', async (req, res, next) => {
   console.log(q);
   console.log(pageToken);
   try {
-    const data = await getAxios('https://www.googleapis.com/youtube/v3/search', {
+    const { data } = await getAxios('https://www.googleapis.com/youtube/v3/search', {
       key: process.env.YOUTUBE_API_KEY,
       part: 'snippet',
       q: q,
@@ -17,7 +17,6 @@ router.post('/search', async (req, res, next) => {
       pageToken: pageToken,
     });
     console.log(data);
-    console.log(json(data));
     res.status(200).json(data);
   } catch (error) {
     res.status(400).json({ message: '요청 실패' });
