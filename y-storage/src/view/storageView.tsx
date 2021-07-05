@@ -60,8 +60,9 @@ const File = styled.div`
   align-items: center;
   width: 80%;
   height: 17%;
-  background-color: red;
   border-radius: 20px;
+  border: 4px solid ${color.blue.lv4};
+  background-color: ${color.white.lv1};
 `;
 
 const Thumbnail = styled.div<ThumbnailProps>`
@@ -73,9 +74,17 @@ const Thumbnail = styled.div<ThumbnailProps>`
 
 const PageNumber = styled.span<SpanProps>`
   cursor: pointer;
-  font-size: 20px;
+  font-size: 25px;
+  color: ${(props) => (props.nowSelect ? `${color.white.lv1}` : `${color.gray.lv2}`)};
   font-weight: ${(props) => (props.nowSelect ? 'bold' : 'lighter')};
   text-decoration: ${(props) => (props.nowSelect ? 'underline' : 'none')};
+`;
+
+const PageBox = styled.div`
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  font-family: math;
 `;
 
 const PageContainer = styled.div`
@@ -84,6 +93,15 @@ const PageContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    96deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(9, 9, 121, 1) 18%,
+    rgba(41, 90, 186, 1) 41%,
+    rgba(6, 68, 160, 1) 76%,
+    rgba(0, 212, 255, 1) 95%
+  );
 `;
 
 const FileContainer = styled.div`
@@ -183,7 +201,7 @@ const StorageView: React.FC = () => {
       </FileContainer>
       <PageContainer>
         {setCenterPage(totalPageNumbers, currentPage).map((number: number) => (
-          <div key={number}>
+          <PageBox key={number}>
             <PageNumber
               onClick={() => {
                 setCurrentPage(number);
@@ -192,7 +210,7 @@ const StorageView: React.FC = () => {
             >
               {number}
             </PageNumber>
-          </div>
+          </PageBox>
         ))}
       </PageContainer>
     </>
