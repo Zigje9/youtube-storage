@@ -16,7 +16,6 @@ router.post('/blob', async (req, res, next) => {
 router.get('/blob', async (req, res, next) => {
   try {
     const data = await getFile();
-    console.log(data);
     res.status(200).json(data);
   } catch (error) {
     res.status(400).json({ message: '요청 실패' });

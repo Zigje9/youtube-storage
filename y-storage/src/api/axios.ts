@@ -11,7 +11,6 @@ export const getAxios = (reqUrl: string, reqParams: Record<string, unknown> = {}
       method: 'get',
       timeout: 10000,
       params: { ...reqParams },
-      withCredentials: true,
     })
     .request({ url: reqUrl });
 };

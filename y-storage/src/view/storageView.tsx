@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import 'dotenv/config';
-import AWS from 'aws-sdk';
 import { saveAs } from 'file-saver';
 import color from '../assets/colors';
 import changeURL from '../utils/changeURL';
@@ -179,7 +178,6 @@ const StorageView: React.FC = () => {
       try {
         const res: any = await getAxios(`${process.env.REACT_APP_SERVER}/blob`);
         const data: any = res.data;
-        console.log(data);
         data.Contents.sort((a: any, b: any) => {
           const dateA = new Date(a.LastModified).getTime();
           const dateB = new Date(b.LastModified).getTime();
@@ -190,24 +188,6 @@ const StorageView: React.FC = () => {
       } catch (error) {
         reject(error);
       }
-      // const params: GetFileParam = {
-      //   Bucket: `${process.env.REACT_APP_AWS_BUCKET}`,
-      //   MaxKeys: 100,
-      // };
-      // s3.listObjectsV2(params, (err, data: any) => {
-      //   if (err) {
-      //     console.log(err);
-      //     reject(err);
-      //   } else {
-      //     data.Contents.sort((a: any, b: any) => {
-      //       const dateA = new Date(a.LastModified).getTime();
-      //       const dateB = new Date(b.LastModified).getTime();
-      //       return dateA > dateB ? -1 : 1;
-      //     });
-      //     setFileList([...data.Contents]);
-      //     resolve('success');
-      //   }
-      // });
     });
   };
 
