@@ -109,7 +109,6 @@ const Header: React.FC<Props> = ({ ...props }: Props) => {
         };
         return infos;
       });
-      console.log(vl);
       setItem([...newItem, ...vl]);
       videoListHandler([...newItem, ...vl]);
       setLoading(false);
@@ -122,12 +121,12 @@ const Header: React.FC<Props> = ({ ...props }: Props) => {
     const {
       documentElement: { scrollTop, clientHeight, scrollHeight },
     } = document;
-    if (scrollTop + clientHeight > scrollHeight - 200 && keyword !== '') {
+    if (scrollTop + clientHeight >= scrollHeight - 200 && keyword !== '') {
       buttonHandler();
     }
   };
 
-  const throttling = throttle(checkScroll, 500);
+  const throttling = throttle(checkScroll, 800);
 
   const keywordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);

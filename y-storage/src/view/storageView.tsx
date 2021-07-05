@@ -75,7 +75,6 @@ const File = styled.div`
   width: 80%;
   height: 17%;
   border-radius: 20px;
-  border: 4px solid ${color.blue.lv4};
   background-color: ${color.white.lv1};
 `;
 
@@ -199,7 +198,7 @@ const StorageView: React.FC = () => {
 
   return (
     <>
-      <StorageHeader></StorageHeader>
+      <StorageHeader numOfFile={fileList.length} lastModified={fileList[0]}></StorageHeader>
       <FileContainer>
         {getCurrentPostList(fileList).map((e: any) => {
           return (
