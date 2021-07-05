@@ -54,6 +54,10 @@ const downloadFlow = async (fileName: string) => {
   downloadFile(blobObject, fileName);
 };
 
+const changeURL = (vid: string) => {
+  return `https://i.ytimg.com/vi/${vid.slice(0, -4)}/mqdefault.jpg`;
+};
+
 const File = styled.div`
   display: flex;
   justify-content: space-around;
@@ -68,7 +72,7 @@ const File = styled.div`
 const Thumbnail = styled.div<ThumbnailProps>`
   height: 80px;
   width: 140px;
-  background-image: url(${(props) => 'https://i.ytimg.com/vi/' + props.videoId.slice(0, -4) + '/mqdefault.jpg'});
+  background-image: url(${(props) => changeURL(props.videoId)});
   background-size: cover;
 `;
 
@@ -169,6 +173,7 @@ const StorageView: React.FC = () => {
             const dateB = new Date(b.LastModified).getTime();
             return dateA > dateB ? -1 : 1;
           });
+          console.log(data);
           setFileList([...data.Contents]);
           resolve('success');
         }
@@ -192,7 +197,7 @@ const StorageView: React.FC = () => {
           return (
             <File key={e.Key}>
               <Thumbnail videoId={e.Key}></Thumbnail>
-              <div>id</div>
+              <div>{e.Key}</div>
               <div>lastmodified</div>
               <div>download</div>
             </File>
