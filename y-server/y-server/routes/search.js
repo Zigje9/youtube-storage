@@ -16,6 +16,8 @@ router.post('/search', async (req, res, next) => {
       maxResults: 10,
       pageToken: pageToken,
     });
+    console.log(data);
+    console.log(json(data));
     res.status(200).json(data);
   } catch (error) {
     res.status(400).json({ message: '요청 실패' });
