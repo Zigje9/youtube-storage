@@ -4,6 +4,10 @@ import { FloppyDisk } from '@styled-icons/icomoon/FloppyDisk';
 import color from '../../assets/colors';
 import { useHistory } from 'react-router-dom';
 
+interface Props {
+  reload: boolean;
+}
+
 const DiskIcon = styled(FloppyDisk)`
   width: 40px;
   color: ${color.white.lv1};
@@ -13,10 +17,13 @@ const DiskIcon = styled(FloppyDisk)`
   }
 `;
 
-const Disk: React.FC = () => {
+const Disk: React.FC<Props> = ({ ...props }: Props) => {
   const history = useHistory();
+  const historyHandler = () => {
+    props.reload ? history.go(0) : history.push('/storage');
+  };
 
-  return <DiskIcon onClick={() => history.push('/storage')}></DiskIcon>;
+  return <DiskIcon onClick={() => historyHandler()}></DiskIcon>;
 };
 
 export default Disk;

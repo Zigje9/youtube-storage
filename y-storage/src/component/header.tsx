@@ -143,8 +143,8 @@ const Header: React.FC<Props> = ({ ...props }: Props) => {
   return (
     <HeaderContainer>
       <DIV></DIV>
-      <Logo></Logo>
-      <DiskButton></DiskButton>
+      <Logo reload={true}></Logo>
+      <DiskButton reload={false}></DiskButton>
       <SearchBar onClick={buttonHandler} onChange={keywordHandler}></SearchBar>
       <SearchButton onClick={buttonHandler}></SearchButton>
       <DIV></DIV>

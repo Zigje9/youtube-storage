@@ -9,6 +9,7 @@ import changeSize from '../utils/changeSize';
 import timer from '../utils/timer';
 import { FolderMusic } from '@styled-icons/entypo/FolderMusic';
 import * as animation from '../assets/animation';
+import StorageHeader from '../component/sotrageHeader';
 
 interface GetBlobParam {
   Bucket: string;
@@ -136,20 +137,6 @@ const FileContainer = styled.div`
   justify-content: space-evenly;
 `;
 
-const StorageHeader = styled.div`
-  width: 100%;
-  height: 12vh;
-  background: rgb(2, 0, 36);
-  background: linear-gradient(
-    96deg,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(9, 9, 121, 1) 18%,
-    rgba(41, 90, 186, 1) 41%,
-    rgba(6, 68, 160, 1) 76%,
-    rgba(0, 212, 255, 1) 95%
-  );
-`;
-
 const StorageView: React.FC = () => {
   const [fileList, setFileList] = useState<any>([]);
 
@@ -163,9 +150,8 @@ const StorageView: React.FC = () => {
 
   const totalPageNumbers = Array.from({ length: Math.ceil(totalPosts / numberOfPost) }, (_, idx) => idx + 1);
 
-  const setCenterPage = (arr: any, centerIdx: any) => {
+  const setCenterPage = (arr: any, centerIdx: number) => {
     const total = totalPageNumbers.length;
-    console.log(centerIdx, totalPageNumbers.length);
     if (total <= 5) {
       return arr;
     }
