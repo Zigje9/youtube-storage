@@ -13,24 +13,13 @@ import { Time } from '@styled-icons/boxicons-solid/Time';
 import * as animation from '../assets/animation';
 import StorageHeader from '../component/sotrageHeader';
 import { fileInfoAlert, timeInfoAlert } from '../utils/infoAlert';
-import { postAxios } from '../api/axios';
-
-interface GetFileParam {
-  Bucket: string;
-  MaxKeys: number;
-}
+import { getAxios, postAxios } from '../api/axios';
 interface ThumbnailProps {
   videoId: string;
 }
 interface SpanProps {
   nowSelect: boolean;
 }
-
-const s3 = new AWS.S3({
-  accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY,
-  secretAccessKey: process.env.REACT_APP_AWS_SECRET_KEY,
-  region: process.env.REACT_APP_AWS_REGION,
-});
 
 const getBlobObject = (fileName: string) => {
   return new Promise(async (resolve, reject) => {
@@ -186,25 +175,39 @@ const StorageView: React.FC = () => {
   };
 
   const getFileList = () => {
-    return new Promise((resolve, reject) => {
-      const params: GetFileParam = {
-        Bucket: `${process.env.REACT_APP_AWS_BUCKET}`,
-        MaxKeys: 100,
-      };
-      s3.listObjectsV2(params, (err, data: any) => {
-        if (err) {
-          console.log(err);
-          reject(err);
-        } else {
-          data.Contents.sort((a: any, b: any) => {
-            const dateA = new Date(a.LastModified).getTime();
-            const dateB = new Date(b.LastModified).getTime();
-            return dateA > dateB ? -1 : 1;
-          });
-          setFileList([...data.Contents]);
-          resolve('success');
-        }
-      });
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res: any = await getAxios(`${process.env.REACT_APP_SERVER}/blob`);
+        const data: any = res.data;
+        console.log(data);
+        data.Contents.sort((a: any, b: any) => {
+          const dateA = new Date(a.LastModified).getTime();
+          const dateB = new Date(b.LastModified).getTime();
+          return dateA > dateB ? -1 : 1;
+        });
+        setFileList([...data.Contents]);
+        resolve('success');
+      } catch (error) {
+        reject(error);
+      }
+      // const params: GetFileParam = {
+      //   Bucket: `${process.env.REACT_APP_AWS_BUCKET}`,
+      //   MaxKeys: 100,
+      // };
+      // s3.listObjectsV2(params, (err, data: any) => {
+      //   if (err) {
+      //     console.log(err);
+      //     reject(err);
+      //   } else {
+      //     data.Contents.sort((a: any, b: any) => {
+      //       const dateA = new Date(a.LastModified).getTime();
+      //       const dateB = new Date(b.LastModified).getTime();
+      //       return dateA > dateB ? -1 : 1;
+      //     });
+      //     setFileList([...data.Contents]);
+      //     resolve('success');
+      //   }
+      // });
     });
   };
 
