@@ -102,7 +102,7 @@ const Header: React.FC<Props> = ({ ...props }: Props) => {
         q: keyword,
         pageToken: nextToken,
       };
-      const res: any = await postAxios('/search', reqData);
+      const res: any = await postAxios(`${process.env.REACT_APP_SERVER}/search`, reqData);
       if (res.data.nextPageToken) {
         setNextToken(res.data.nextPageToken);
       }
