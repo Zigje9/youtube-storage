@@ -91,13 +91,6 @@ const Header: React.FC<Props> = ({ ...props }: Props) => {
     }
     setPrevKeyword(keyword);
     try {
-      // const res: any = await getAxios('/search', {
-      //   key: process.env.REACT_APP_YOUTUBE_API_KEY,
-      //   part: 'snippet',
-      //   q: keyword,
-      //   maxResults: 10,
-      //   pageToken: nextToken,
-      // });
       const reqData = {
         q: keyword,
         pageToken: nextToken,
