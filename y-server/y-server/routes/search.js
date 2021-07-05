@@ -5,9 +5,6 @@ const getAxios = require('../service/axios');
 
 router.post('/search', async (req, res, next) => {
   const { q, pageToken } = req.body;
-  console.log(req.body);
-  console.log(q);
-  console.log(pageToken);
   try {
     const { data } = await getAxios('https://www.googleapis.com/youtube/v3/search', {
       key: process.env.YOUTUBE_API_KEY,
@@ -16,7 +13,6 @@ router.post('/search', async (req, res, next) => {
       maxResults: 10,
       pageToken: pageToken,
     });
-    console.log(data);
     res.status(200).json(data);
   } catch (error) {
     res.status(400).json({ message: '요청 실패' });
