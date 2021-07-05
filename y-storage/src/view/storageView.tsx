@@ -54,8 +54,16 @@ const downloadFile = (mp3: any, fileName: string) => {
 };
 
 const downloadFlow = async (fileName: string) => {
-  const blobObject = await getBlobObject(fileName);
-  downloadFile(blobObject, fileName);
+  if (confirm('다운로드를 시작하겠습니까?')) {
+    try {
+      const blobObject = await getBlobObject(fileName);
+      downloadFile(blobObject, fileName);
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    console.log('취소');
+  }
 };
 
 const File = styled.div`
