@@ -67,7 +67,7 @@ const CheckListButton: React.FC<Props> = ({ ...props }: Props) => {
           Object.keys(cartList).map((vid, idx) => {
             return (
               <Container key={`${vid}*${idx}`}>
-                <DropDownContent>{cartList[vid]}</DropDownContent>
+                <DropDownContent>{cartList[vid][0]}</DropDownContent>
                 <BottomLine></BottomLine>
               </Container>
             );

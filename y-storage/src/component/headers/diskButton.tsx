@@ -20,7 +20,7 @@ const DiskIcon = styled(FloppyDisk)`
 const Disk: React.FC<Props> = ({ ...props }: Props) => {
   const history = useHistory();
   const historyHandler = () => {
-    props.reload ? history.go(0) : history.push('/storage');
+    props.reload ? history.push('/storage') : history.push('/storage');
   };
 
   return <DiskIcon onClick={() => historyHandler()}></DiskIcon>;
