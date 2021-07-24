@@ -10,7 +10,7 @@ import { FolderMusic } from '@styled-icons/entypo/FolderMusic';
 import { TagQuestionMark } from '@styled-icons/fluentui-system-filled/TagQuestionMark';
 import { Time } from '@styled-icons/boxicons-solid/Time';
 import * as animation from '../assets/animation';
-import StorageHeader from '../component/sotrageHeader';
+import StorageHeader from '../component/storageHeader';
 import { fileInfoAlert, timeInfoAlert } from '../utils/infoAlert';
 import { getAxios, postAxios } from '../api/axios';
 interface ThumbnailProps {
