@@ -2,7 +2,8 @@
 
 #### 주제 : Youtube API를 활용하여 영상을 검색하고, mp3 파일로 다운받을 수 있는 웹 사이트
 
-[y-storage 접속하기 👈](http://www.y-storage.kro.kr)
+[~~y-storage 접속하기 👈~~](http://www.y-storage.kro.kr)
+
 
 #### 메인페이지 : 영상을 검색하여 조회하고 공유 저장소로 다운로드 받을 수 있는 페이지
 
@@ -12,7 +13,7 @@
 
 ![](https://i.imgur.com/c73ZUrS.png)
 
-#### 개발 기간 : 2021.06.09 ~ ing
+#### 개발 기간 : 2021.06.09 ~ 2021.07.06
 
 ---
 
